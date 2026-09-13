@@ -222,10 +222,10 @@ section.wrap p a{color:inherit;text-decoration:none;border-bottom:1px solid var(
 section.wrap p a:hover{border-bottom-color:var(--ink-soft)}
 .work{margin:0 0 3.4rem}
 .work img{width:100%;height:auto;display:block;border-radius:4px}
-.work video{width:100%;height:auto;display:block;border-radius:4px;background:#000}
+.work video{width:100%;height:auto;display:block;border-radius:4px;background:var(--ground)}
 .work .cap{font-size:0.92rem;color:var(--ink-soft);margin:0.8rem 0 0;line-height:1.6}
 .work .cap em{font-style:italic}
-.work{position:relative;left:50%;transform:translateX(-50%);width:min(92vw,1040px)}
+.work{width:min(92vw,1040px);margin-left:calc(50% - min(46vw,520px))}
 </style>
 </head>
 <body>
@@ -238,19 +238,18 @@ section.wrap p a:hover{border-bottom-color:var(--ink-soft)}
 
 <main>
 <section class="wrap">
-  <p>Each animation begins with a poem written in the form of a Python script. Each poem takes as its starting point a quote from <em>Frankenstein</em>, in which the creature narrates his earliest memories of sensation and language. The animations borrow the logic of the calligram: language that assembles itself in the shape of what it names. The letters morph into forms such as a seahorse, birds, and moths, which then multiply, sing, or tremble in response to real-world data: hydrophone recordings, radio waves from the magnetosphere, birdsong, and fungal electrical signals.</p>
-  <p>The animations are best watched with sound.</p>
+  <p>Each animation begins with a poem written in the form of a Python script and takes as its starting point a quote from the creature in Mary Shelley&rsquo;s <em>Frankenstein</em>, in which he describes his earliest memories of sensation and language. The animations borrow the logic of the calligram, as poems that take the shape of or depict their content. Letters then morph into forms such as a seahorse, birds, and moths, which multiply, sing, or tremble in response to real-world data: hydrophone recordings, radio waves from the magnetosphere, birdsong, and fungal electrical signals.</p>
   <div class="work">
-    <video controls preload="metadata" playsinline src="photonic-emergence-master.mp4"></video>
-    <p class="cap"><em>photonic emergence</em>, 2025. Animated code poem, made in collaboration with a large language model.</p>
+    <video controls preload="auto" playsinline src="photonic-emergence-master.mp4"></video>
+    <p class="cap"><em>photonic emergence</em>, 2025.</p>
   </div>
   <div class="work">
-    <video controls preload="metadata" playsinline src="sonic-field-master.mp4"></video>
-    <p class="cap"><em>sonic field</em>, 2026. Animated code poem, made in collaboration with a large language model.</p>
+    <video controls preload="auto" playsinline src="sonic-field-master.mp4"></video>
+    <p class="cap"><em>sonic field</em>, 2026.</p>
   </div>
   <div class="work">
-    <video controls preload="metadata" playsinline src="filament-master.mp4"></video>
-    <p class="cap"><em>filament</em>, 2026. Animated code poem, made in collaboration with a large language model.</p>
+    <video controls preload="auto" playsinline src="filament-master.mp4"></video>
+    <p class="cap"><em>filament</em>, 2026.</p>
   </div>
 </section>
 </main>
