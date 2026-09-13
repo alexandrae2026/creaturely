@@ -226,6 +226,8 @@ section.wrap p a:hover{border-bottom-color:var(--ink-soft)}
 .work .cap{font-size:0.92rem;color:var(--ink-soft);margin:0.8rem 0 0;line-height:1.6}
 .work .cap em{font-style:italic}
 .work{width:min(92vw,1040px);margin-left:calc(50% - min(46vw,520px))}
+.work video{cursor:pointer}
+.work .cap .hint{color:var(--silver-deep);font-size:0.82rem}
 </style>
 </head>
 <body>
@@ -240,20 +242,39 @@ section.wrap p a:hover{border-bottom-color:var(--ink-soft)}
 <section class="wrap">
   <p>Each animation begins with a poem written in the form of a Python script and takes as its starting point a quote from the creature in Mary Shelley&rsquo;s <em>Frankenstein</em>, in which he describes his earliest memories of sensation and language. The animations borrow the logic of the calligram, as poems that take the shape of or depict their content. Letters then morph into forms such as a seahorse, birds, and moths, which multiply, sing, or tremble in response to real-world data: hydrophone recordings, radio waves from the magnetosphere, birdsong, and fungal electrical signals.</p>
   <div class="work">
-    <video controls preload="auto" playsinline src="photonic-emergence-master.mp4"></video>
-    <p class="cap"><em>photonic emergence</em>, 2025.</p>
+    <video preload="auto" playsinline src="photonic-emergence-master.mp4"></video>
+    <p class="cap"><em>photonic emergence</em>, 2025. <span class="hint">click to play, click again to pause, double-click for fullscreen.</span></p>
   </div>
   <div class="work">
-    <video controls preload="auto" playsinline src="sonic-field-master.mp4"></video>
-    <p class="cap"><em>sonic field</em>, 2026.</p>
+    <video preload="auto" playsinline src="sonic-field-master.mp4"></video>
+    <p class="cap"><em>sonic field</em>, 2026. <span class="hint">click to play, click again to pause, double-click for fullscreen.</span></p>
   </div>
   <div class="work">
-    <video controls preload="auto" playsinline src="filament-master.mp4"></video>
-    <p class="cap"><em>filament</em>, 2026.</p>
+    <video preload="auto" playsinline src="filament-master.mp4"></video>
+    <p class="cap"><em>filament</em>, 2026. <span class="hint">click to play, click again to pause, double-click for fullscreen.</span></p>
   </div>
 </section>
 </main>
 
+<script>
+/* the films: no furniture over the picture */
+document.querySelectorAll(".work video").forEach(v => {
+  let clickTimer = null;
+  v.addEventListener("click", () => {
+    if(clickTimer){ clearTimeout(clickTimer); clickTimer = null; return; }
+    clickTimer = setTimeout(() => {
+      clickTimer = null;
+      if(v.paused){ document.querySelectorAll(".work video").forEach(o => { if(o !== v) o.pause(); }); v.play(); }
+      else v.pause();
+    }, 220);
+  });
+  v.addEventListener("dblclick", () => {
+    const req = v.requestFullscreen || v.webkitEnterFullscreen || v.webkitRequestFullscreen;
+    if(req) req.call(v);
+  });
+  v.addEventListener("ended", () => { v.currentTime = 0; });
+});
+</script>
 <script>
 window.addEventListener("pageshow", e=>{
   if(e.persisted){ document.body.style.animation = "none"; document.body.style.transition = "none"; document.body.style.opacity = "1"; }
