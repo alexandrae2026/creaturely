@@ -203,7 +203,9 @@ footer p{
 #meter{height:12px;background:var(--silver);border-radius:2px;overflow:hidden;margin-top:1rem}
 #meter i{display:block;height:100%;width:0;background:#2FA89A;transition:width 500ms ease}
 .meterlbl{font-family:var(--sans);font-size:0.7rem;color:var(--ink-soft);margin-top:0.4rem}
-#packC{width:100%;height:320px;display:block;border-radius:4px}
+#packC,#polyC{width:100%;height:380px;display:block;border-radius:4px;background:#ffffff;border:1px solid var(--hair);cursor:grab;touch-action:none}
+#packC.dragging,#polyC.dragging{cursor:grabbing}
+.quiet.on{color:var(--ink);border-color:var(--ink-soft)}
 .tctl{display:flex;align-items:center;gap:1rem;margin-top:1rem;flex-wrap:wrap}
 .tctl input[type=range]{flex:1;min-width:180px;accent-color:#5E87A0}
 .tval{font-family:var(--sans);font-size:0.78rem;color:var(--ink)}
@@ -220,60 +222,10 @@ body{animation:pagein 620ms ease both}
 .note details[open] summary::before{content:"\2013 ";}
 .note details p{margin-top:0.55rem}.reg .r2 h3{color:var(--turq)}.reg .r3 h3{color:var(--purp)}.sources{margin-top:2.4rem;border-top:1px solid var(--silver);padding-top:1.1rem}
 .sources .skick{font-family:var(--sans);font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--silver-deep);margin:0 0 0.7rem}
-.sources p{font-size:0.85rem;color:var(--ink-soft);line-height:1.65;margin:0 0 0.55rem}
-.fig-sx .fig-sx{
-    --ink:#eef6f6; --ink-2:#f8fefe; --hair:#d3e3e2; --hair-2:#c2d6d4;
-    --turq:#179fa0; --purp:#bd88bf; --coral:#f08a52; --gold:#edbe23;
-    --text:#2b3a3d; --text-dim:#6c8082;
-    --disp:'Jost','Avenir Next','Century Gothic',sans-serif;
-    --body:'Inter',system-ui,sans-serif;
-    --mono:'IBM Plex Mono',ui-monospace,monospace;
-  }
-.fig-sx *{box-sizing:border-box}
-.fig-sx .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--purp);margin:0 0 16px}
-.fig-sx h1.title{font-family:var(--disp);font-weight:300;font-size:clamp(28px,5vw,50px);line-height:1.08;letter-spacing:-.01em;margin:0 0 20px;max-width:22ch}
-.fig-sx .lede{font-size:clamp(14px,1.5vw,16.5px);max-width:62ch;color:var(--text-dim);margin:0 0 4px}
-.fig-sx .lede b{color:var(--text);font-weight:500}
-.fig-sx .pop{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:26px;margin-top:30px;align-items:start}
-.fig-sx .canvas-wrap{position:relative;border:1px solid var(--hair);border-radius:2px;background:var(--ink-2);aspect-ratio:1/1;max-width:540px;margin:0 auto;overflow:hidden}
-.fig-sx .canvas-wrap canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.fig-sx .corner{position:absolute;width:11px;height:11px;border:1px solid var(--hair);z-index:2}
-.fig-sx .c-tl{top:8px;left:8px;border-right:0;border-bottom:0}.c-tr{top:8px;right:8px;border-left:0;border-bottom:0}
-.fig-sx .c-bl{bottom:8px;left:8px;border-right:0;border-top:0}.c-br{bottom:8px;right:8px;border-left:0;border-top:0}
-.fig-sx .ctl-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-dim);margin:0 0 9px}
-.fig-sx .sheets{display:flex;flex-direction:column;gap:6px}
-.fig-sx .sheet{display:flex;align-items:center;gap:9px;font-family:var(--body);font-size:13px;background:transparent;color:var(--text-dim);border:1px solid var(--hair);border-radius:2px;padding:8px 10px;cursor:pointer;text-align:left;transition:color .2s,border-color .2s}
-.fig-sx .sheet i{width:10px;height:10px;border-radius:2px;display:inline-block}
-.fig-sx .sheet:hover{color:var(--text);border-color:var(--hair-2)}
-.fig-sx .sheet.laid{color:var(--text);border-color:var(--text-dim)}
-.fig-sx .sheet .st{margin-left:auto;font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--text-dim)}
-.fig-sx .sheet:focus-visible{outline:2px solid var(--turq);outline-offset:2px}
-.fig-sx .row{display:flex;gap:8px;margin-top:12px}
-.fig-sx .btn{font-family:var(--mono);font-size:11px;background:transparent;color:var(--text-dim);border:1px solid var(--hair);border-radius:2px;padding:7px 12px;cursor:pointer;transition:color .18s,border-color .18s}
-.fig-sx .btn:hover{color:var(--text);border-color:#aecdcb}
-.fig-sx .reading{margin-top:18px;background:#edf4f2;border-radius:2px;padding:15px 16px;font-size:14px;color:var(--text);min-height:64px}
-.fig-sx .reading .dim{color:var(--text-dim)}
-.fig-sx .undercap{font-family:var(--mono);font-size:11px;color:var(--text-dim);margin-top:12px;text-align:center}
-.fig-sx .reg{margin-top:44px;border-top:1px solid var(--hair);padding-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
-.fig-sx .reg h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;margin:0 0 9px;font-weight:400}
-.fig-sx .reg .r1 h3{color:var(--text-dim)}.reg .r2 h3{color:var(--turq)}.reg .r3 h3{color:var(--coral)}
-.fig-sx .reg p{margin:0;font-size:13.5px;color:var(--text);max-width:40ch}
-.fig-sx .reg p .soft{color:var(--text-dim)}
-.fig-sx .note{margin-top:36px;font-family:var(--mono);font-size:11px;color:var(--text-dim);border:1px dashed var(--hair-2);border-radius:2px;padding:12px 14px;line-height:1.6;max-width:74ch}
-
-.fig-sx{margin:2.4rem 0 2.6rem;font-family:'Inter',system-ui,sans-serif}
-.fig-sx .canvas-wrap{margin-top:0}
-.fig-sx .reg,.fig-sx #sx-reading{display:none}
-.fig-sx .pop{display:block}
-.fig-sx .canvas-wrap{max-width:none;aspect-ratio:4/3}
-.fig-sx .sheets{flex-direction:row;flex-wrap:wrap;gap:8px 10px;justify-content:center;margin-top:1rem}
-.fig-sx .row{margin-top:0.8rem}
-.colophon{margin-top:2.2rem;padding-top:0.9rem;border-top:1px solid var(--silver);font-family:var(--sans);font-size:0.62rem;letter-spacing:0.08em;color:var(--silver-deep);line-height:1.7}
+.sources p{font-size:0.85rem;color:var(--ink-soft);line-height:1.65;margin:0 0 0.55rem}.c-tr{top:8px;right:8px;border-left:0;border-bottom:0}.c-br{bottom:8px;right:8px;border-left:0;border-top:0}.reg .r2 h3{color:var(--turq)}.reg .r3 h3{color:var(--coral)}.colophon{margin-top:2.2rem;padding-top:0.9rem;border-top:1px solid var(--silver);font-family:var(--sans);font-size:0.62rem;letter-spacing:0.08em;color:var(--silver-deep);line-height:1.7}
 .colophon a{color:inherit;text-decoration:none;border-bottom:1px solid var(--silver)}
 .sources a{color:inherit;text-decoration:none;border-bottom:1px solid var(--silver)}
-.sources a:hover{border-bottom-color:var(--ink-soft)}
-.fig-sx .canvas-wrap{background:#ffffff;border:1px solid #d3e3e2;border-radius:4px;box-shadow:0 1px 0 rgba(0,0,0,0.02)}
-</style>
+.sources a:hover{border-bottom-color:var(--ink-soft)}</style>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -302,10 +254,11 @@ body{animation:pagein 620ms ease both}
 <div class="bleed">
   <div class="panel">
     <p class="plabel">one neuron, several meanings</p>
+    <canvas id="polyC" role="img" aria-label="Ten words as points in a turning space with one neuron drawn as an axis through it; pressing a word shows its projection onto the axis"></canvas>
     <div class="btnrow" id="wordBtns"></div>
     <div id="meter"><i></i></div>
     <p class="meterlbl" id="meterlbl">activation: 0.00</p>
-    <p class="readout" id="mRead">feed it words. try to name what this neuron means.</p>
+    <p class="readout" id="mRead">drag to turn &middot; press a word to see how far it falls along the neuron&rsquo;s direction.</p>
   </div>
 </div>
 
@@ -319,17 +272,20 @@ body{animation:pagein 620ms ease both}
   <p class="seckick">ii &middot; features in superposition</p>
   <p>The same idea can be pictured through vectors. Imagine that each feature is represented by a direction in an activation space. If two directions are perpendicular, they can vary independently without being mistaken for one another.</p>
   <p>A space with a thousand dimensions can contain only a thousand directions that are all exactly perpendicular. A model, however, may benefit from representing far more than a thousand features. When those features are sparse, it can pack additional directions into the space at angles. The directions are no longer perfectly independent, but the model can tolerate some interference when the features seldom become active together.</p>
-  <p>Training balances the usefulness of representing another feature against the interference that feature creates. Crowd the disc below and watch the separation between its directions shrink.</p>
+  <p>Training balances the usefulness of representing another feature against the interference that feature creates. Crowd the sphere below and watch the separation between its directions shrink.</p>
 </section>
 
 <div class="bleed">
   <div class="panel">
     <p class="plabel">packing directions into a small space</p>
-    <canvas id="packC" role="img" aria-label="Directions packing into a disc, their angles shrinking as more are added"></canvas>
+    <canvas id="packC" role="img" aria-label="Feature directions packed into a sphere, their angles shrinking as more are added"></canvas>
     <div class="tctl">
       <span class="tval">features</span>
-      <input type="range" id="nSlider" min="2" max="24" step="1" value="3" aria-label="Number of features">
+      <input type="range" id="nSlider" min="3" max="40" step="1" value="3" aria-label="Number of features">
       <span class="tval" id="nVal">3</span>
+      <span class="tval" style="margin-left:auto">active at once</span>
+      <button class="quiet on" type="button" id="bSparse">sparse</button>
+      <button class="quiet" type="button" id="bCrowd">crowded</button>
     </div>
     <p class="anglelbl" id="anglelbl"></p>
     <p class="readout" id="pRead"></p>
@@ -337,39 +293,10 @@ body{animation:pagein 620ms ease both}
 </div>
 
 <section class="wrap">
-  <p>The disc makes the bargain visible. In two dimensions, only two directions can be mutually perpendicular. More directions can be added, but as the space becomes crowded, they become harder to distinguish.</p>
-  <p>A real model works in spaces with thousands of dimensions. These larger spaces can accommodate many more directions with far less crowding than the disc suggests. Research on superposition proposes that neural networks take advantage of this geometry, allowing more features to be represented than the number of dimensions would otherwise permit.</p>
+  <p>The sphere makes the bargain visible. In three dimensions, only three directions can be mutually perpendicular. More directions can be added, but as the space becomes crowded, they become harder to distinguish.</p>
+  <p>A real model works in spaces with thousands of dimensions. These larger spaces can accommodate many more directions with far less crowding than the sphere suggests. Research on superposition proposes that neural networks take advantage of this geometry, allowing more features to be represented than the number of dimensions would otherwise permit.</p>
   <p>This is one reason the parameters are difficult to read. Ask what one neuron means, and several features may answer at once. Ask where one feature lives, and it may be spread across many neurons. <em>Interpretability</em> is the field that tries to untangle these relationships. Recent methods attempt to separate shared representations into individual features again, with promising but partial results.</p>
   <p>The parameters therefore hold patterns that their individual parts do not display cleanly. The next entry turns from the model&rsquo;s internal representations to the conversation around it, and to a different kind of memory.</p>
-  <div class="fig-sx"><div class="stage">
-  
-  
-  
-
-  <div class="pop">
-    <div>
-      <div class="canvas-wrap" id="sx-wrap">
-        <span class="corner c-tl"></span><span class="corner c-tr"></span><span class="corner c-bl"></span><span class="corner c-br"></span>
-        <canvas id="sx-cv" aria-label="A square field on which constellations of characters gather into forms and are laid over one another. Few remain legible; many become a shimmering cloud."></canvas>
-      </div>
-      <p class="undercap" id="sx-count">the field is bare</p>
-    </div>
-    <div>
-      <p class="ctl-label">Meanings &middot; forms</p>
-      <div class="sheets" id="sx-sheets"></div>
-      <div class="row"><button class="btn" id="sx-b-all">lay them all</button><button class="btn" id="sx-b-clear">let them go</button></div>
-    </div>
-  </div>
-  <div class="reading" id="sx-reading"></div>
-
-  <div class="reg">
-    <div class="r1"><h3>Gather &middot; one form each</h3><p>A meaning is not drawn. It is gathered, its characters drifting from a scatter onto an outline until a form is there. <span class="soft">Laid on the field it adds to what is present; nothing beneath it is removed.</span></p></div>
-    <div class="r2"><h3>Few &middot; legible</h3><p>With two or three laid, each still reads through the others. <span class="soft">Their characters keep mostly clear of one another. This is the ordinary state of a network, where only a few meanings are active at once.</span></p></div>
-    <div class="r3"><h3>All &middot; the cloud</h3><p>Lay them all and the forms return to the cloud. <span class="soft">Nothing is lost; the field is at its most complete and its least readable. Lift one and it emerges, stained by the rest: that stain is the price of holding more than there is room for.</span></p></div>
-  </div>
-
-  
-</div></div>
 
 
   <div class="poem">
@@ -386,7 +313,7 @@ body{animation:pagein 620ms ease both}
       <summary>notes on this page</summary>
       <p>The neuron in the first panel is scripted to respond to two hand-chosen families of words. It illustrates polysemantic behaviour but does not reproduce the activity of a neuron found in a working model. Real mixtures are discovered through analysis rather than assigned in advance, and they can be far less easy to name.</p>
       <p>There is no single, universally settled definition of a feature. On this page, the word describes a recurring pattern in a model&rsquo;s activity associated with some property, context, or function. The names researchers give such patterns are interpretations based on the examples that activate them; the model does not attach those labels itself.</p>
-      <p>The disc is a two-dimensional teaching image of a high-dimensional arrangement. Feature directions are not literal arrows stored inside a model. They are patterns described mathematically across many numerical values. In thousands of dimensions, many directions can remain nearly perpendicular, making the geometry far more forgiving than the disc suggests.</p>
+      <p>The sphere is a three-dimensional teaching image of a high-dimensional arrangement. Feature directions are not literal arrows stored inside a model. They are patterns described mathematically across many numerical values. In thousands of dimensions, many directions can remain nearly perpendicular, making the geometry far more forgiving than the sphere suggests.</p>
       <p>Toy models show how the sparsity and importance of features can encourage superposition. Evidence from trained networks is consistent with this account, but the extent and organization of superposition in large language models remain active areas of research.</p>
       <p>Methods called sparse autoencoders attempt to decompose a model&rsquo;s activity into a larger collection of features, only a small number of which are active at one time. These methods have recovered many patterns that people can interpret, but they do not yet provide a complete or uniquely correct map of what a model represents.</p>
     </details>
@@ -406,244 +333,197 @@ body{animation:pagein 620ms ease both}
 </footer>
 
 <script>
-/* ---------- one neuron, several meanings ---------- */
-const RESP = {
-  light:0.82, glimmer:0.74, beam:0.69, song:0.71, echo:0.63,
-  water:0.06, oak:0.04, dust:0.18, edge:0.12, night:0.09
-};
+/* ---------- shared: a small turning space ---------- */
+const INK="#2B2E28", SOFT="#5A5E55", SILVER="#C9CCC6", TURQ="#179fa0", CORAL="#f08a52", MADDER="#8C4A32", GOLD="#edbe23", PURP="#bd88bf";
+function makeSpace(canvas, opts){
+  const ctx = canvas.getContext("2d");
+  const st = {theta:0.55, tilt:0.32, drag:false, px:0, py:0, last:0, auto:true, W:0, H:0, dpr:1};
+  function size(){
+    st.dpr = Math.min(2, window.devicePixelRatio||1);
+    st.W = canvas.clientWidth; st.H = canvas.clientHeight;
+    canvas.width = Math.round(st.W*st.dpr); canvas.height = Math.round(st.H*st.dpr);
+    ctx.setTransform(st.dpr,0,0,st.dpr,0,0);
+  }
+  function project(x,y,z){                     /* x right, y up, z toward viewer, all in [-1,1] */
+    const c=Math.cos(st.theta), s=Math.sin(st.theta);
+    const xr = x*c + z*s, zr = -x*s + z*c;
+    const ct=Math.cos(st.tilt), stl=Math.sin(st.tilt);
+    const yr = y*ct - zr*stl, zz = y*stl + zr*ct;
+    const R = Math.min(st.W, st.H) * (opts.radius||0.36);
+    return {sx: st.W/2 + xr*R, sy: st.H/2 - yr*R, depth: (zz+1)/2};
+  }
+  canvas.addEventListener("pointerdown", e=>{ st.drag=true; st.px=e.clientX; st.py=e.clientY; canvas.setPointerCapture(e.pointerId); canvas.classList.add("dragging"); st.moved=false; });
+  canvas.addEventListener("pointermove", e=>{ if(!st.drag) return; const dx=e.clientX-st.px, dy=e.clientY-st.py; if(Math.abs(dx)+Math.abs(dy)>2) st.moved=true; st.theta+=dx*0.008; st.tilt=Math.max(-1.3,Math.min(1.3,st.tilt+dy*0.006)); st.px=e.clientX; st.py=e.clientY; st.last=performance.now(); });
+  canvas.addEventListener("pointerup", e=>{ st.drag=false; canvas.classList.remove("dragging"); if(!st.moved && opts.onTap) opts.onTap(e); });
+  canvas.addEventListener("pointerleave", ()=>{ st.drag=false; canvas.classList.remove("dragging"); });
+  window.addEventListener("resize", size);
+  size();
+  return {ctx, st, size, project, canvas};
+}
+function axisLine(ctx, p0, p1, color, width, dash){
+  ctx.save(); if(dash) ctx.setLineDash(dash); ctx.strokeStyle=color; ctx.lineWidth=width;
+  ctx.beginPath(); ctx.moveTo(p0.sx,p0.sy); ctx.lineTo(p1.sx,p1.sy); ctx.stroke(); ctx.restore();
+}
+
+/* ---------- panel one: one neuron, several meanings ---------- */
+const RESP = { light:0.82, glimmer:0.74, beam:0.69, song:0.71, echo:0.63, water:0.06, oak:0.04, dust:0.18, edge:0.12, night:0.09 };
+/* the neuron's direction, and each word placed so that its projection on it equals its activation.
+   the light family and the song family sit on opposite sides of the axis, yet both fall along it. */
+const N_DIR = norm([0.62, 0.55, 0.36]);
+const U_DIR = norm(cross(N_DIR, [0,1,0]));
+const V_DIR = norm(cross(N_DIR, U_DIR));
+function norm(v){ const l=Math.hypot(...v); return v.map(a=>a/l); }
+function cross(a,b){ return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
+function comb(a,u,v){ return [0,1,2].map(i => a*N_DIR[i] + u*U_DIR[i] + v*V_DIR[i]); }
+const WORDS = [
+  {w:"light",   p:comb(0.82,  0.42,  0.10)},
+  {w:"glimmer", p:comb(0.74,  0.55, -0.12)},
+  {w:"beam",    p:comb(0.69,  0.30,  0.30)},
+  {w:"song",    p:comb(0.71, -0.48,  0.06)},
+  {w:"echo",    p:comb(0.63, -0.58, -0.22)},
+  {w:"water",   p:comb(0.06, -0.20,  0.78)},
+  {w:"oak",     p:comb(0.04,  0.66, -0.56)},
+  {w:"dust",    p:comb(0.18,  0.10, -0.80)},
+  {w:"edge",    p:comb(0.12, -0.72,  0.44)},
+  {w:"night",   p:comb(0.09, -0.30, -0.70)},
+];
+const polyC = document.getElementById("polyC");
 const wordBtns = document.getElementById("wordBtns");
 const meterBar = document.querySelector("#meter i");
 const meterlbl = document.getElementById("meterlbl");
 const mRead = document.getElementById("mRead");
-let fed = new Set();
-Object.keys(RESP).forEach(w=>{
-  const b = document.createElement("button");
-  b.className = "quiet"; b.type = "button"; b.textContent = w;
-  b.addEventListener("click", ()=>{
-    const v = RESP[w];
-    meterBar.style.width = (v*100)+"%";
-    meterlbl.textContent = `activation: ${v.toFixed(2)}`;
-    fed.add(w);
-    const litLight = ["light","glimmer","beam"].some(x=>fed.has(x));
-    const litSong = ["song","echo"].some(x=>fed.has(x));
-    if(litLight && litSong){
-      mRead.textContent = "it answers to light-things and to song-things. one unit, more than one meaning: polysemantic.";
-    } else if(v > 0.5){
-      mRead.textContent = `${w}: it fires. keep exploring what else wakes it.`;
-    } else {
-      mRead.textContent = `${w}: barely a flicker.`;
-    }
-  });
-  wordBtns.appendChild(b);
+let selected = null; const fed = new Set();
+const P1 = makeSpace(polyC, {radius:0.52, onTap:e=>{
+  const r = polyC.getBoundingClientRect(); const mx=e.clientX-r.left, my=e.clientY-r.top;
+  let best=null, bd=24;
+  WORDS.forEach(o=>{ const q=P1.project(...o.p); const d=Math.hypot(q.sx-mx,q.sy-my); if(d<bd){bd=d;best=o;} });
+  if(best) feedWord(best.w);
+}});
+WORDS.forEach(o=>{
+  const b=document.createElement("button"); b.className="quiet"; b.type="button"; b.textContent=o.w; b.dataset.w=o.w;
+  b.addEventListener("click", ()=>feedWord(o.w)); wordBtns.appendChild(b);
 });
+function feedWord(w){
+  selected = w; fed.add(w);
+  wordBtns.querySelectorAll("button").forEach(b=>b.classList.toggle("on", b.dataset.w===w));
+  const a = RESP[w];
+  meterBar.style.width = (a*100).toFixed(0)+"%";
+  meterlbl.textContent = "activation: " + a.toFixed(2);
+  const light = ["light","glimmer","beam"].filter(x=>fed.has(x)).length, song = ["song","echo"].filter(x=>fed.has(x)).length;
+  if(light && song) mRead.innerHTML = "<em>"+w+"</em> falls " + a.toFixed(2) + " along the axis. two different families, light and song, both lie along this neuron&rsquo;s direction. it answers to both.";
+  else if(a > 0.5) mRead.innerHTML = "<em>"+w+"</em> falls " + a.toFixed(2) + " along the axis: a strong response. try a word from a different family.";
+  else mRead.innerHTML = "<em>"+w+"</em> sits almost perpendicular to the axis: its projection is " + a.toFixed(2) + ". this neuron barely notices it.";
+}
+function drawPoly(now){
+  const {ctx, st, project} = P1; const W=st.W, H=st.H;
+  if(!st.drag && now - st.last > 1500) st.theta += 0.0016;
+  ctx.clearRect(0,0,W,H);
+  /* the neuron's axis, through the origin */
+  const a0 = project(...N_DIR.map(v=>-v*1.15)), a1 = project(...N_DIR.map(v=>v*1.15)), o = project(0,0,0);
+  axisLine(ctx, a0, o, SILVER, 1, [3,4]);
+  axisLine(ctx, o, a1, SOFT, 1.4);
+  ctx.fillStyle = SOFT; ctx.font = "11px system-ui, sans-serif"; ctx.textAlign="left";
+  ctx.fillText("neuron", a1.sx+6, a1.sy+4);
+  ctx.beginPath(); ctx.arc(o.sx,o.sy,2.2,0,6.283); ctx.fillStyle=SILVER; ctx.fill();
+  /* faint perpendicular plane through the origin, to show what falls off the axis */
+  ctx.save(); ctx.strokeStyle="rgba(138,141,135,0.25)"; ctx.lineWidth=0.8; ctx.beginPath();
+  for(let k=0;k<=48;k++){ const t=k/48*6.283; const q=project(...comb(0, Math.cos(t)*0.9, Math.sin(t)*0.9)); k?ctx.lineTo(q.sx,q.sy):ctx.moveTo(q.sx,q.sy); }
+  ctx.stroke(); ctx.restore();
+  /* the words, far first */
+  const pts = WORDS.map(o=>({o, q:project(...o.p)})).sort((A,B)=>A.q.depth-B.q.depth);
+  for(const {o,q} of pts){
+    const isSel = o.w===selected, seen = fed.has(o.w);
+    const a = RESP[o.w];
+    const fam = ["light","glimmer","beam"].includes(o.w) ? GOLD : ["song","echo"].includes(o.w) ? PURP : SILVER;
+    if(isSel){
+      /* drop to the axis: the projection */
+      const foot = project(...N_DIR.map(v=>v*a));
+      axisLine(ctx, q, foot, "rgba(43,46,40,0.45)", 1, [2,3]);
+      axisLine(ctx, o.w ? project(0,0,0) : foot, foot, TURQ, 3.2);
+      ctx.beginPath(); ctx.arc(foot.sx,foot.sy,3,0,6.283); ctx.fillStyle=TURQ; ctx.fill();
+    }
+    const r = 3 + q.depth*2.5 + (isSel?1.5:0);
+    ctx.beginPath(); ctx.arc(q.sx,q.sy,r,0,6.283);
+    ctx.fillStyle = isSel ? INK : fam; ctx.globalAlpha = 0.45 + 0.55*q.depth; ctx.fill(); ctx.globalAlpha = 1;
+    ctx.fillStyle = isSel ? INK : (seen ? SOFT : "rgba(90,94,85,0.75)");
+    ctx.font = (isSel ? "italic 13px" : "italic 12px") + " Georgia, serif"; ctx.textAlign="left";
+    ctx.fillText(o.w, q.sx+7, q.sy+4);
+  }
+  requestAnimationFrame(drawPoly);
+}
+requestAnimationFrame(drawPoly);
 
-/* ---------- packing directions ---------- */
+/* ---------- panel two: packing directions into a sphere ---------- */
 const packC = document.getElementById("packC");
-const pctx = packC.getContext("2d");
-let PDPR = Math.min(window.devicePixelRatio||1,2);
-function sizePack(){
-  PDPR = Math.min(window.devicePixelRatio||1,2);
-  packC.width = packC.clientWidth*PDPR; packC.height = packC.clientHeight*PDPR;
-  drawPack();
+const nSlider = document.getElementById("nSlider"), nVal = document.getElementById("nVal");
+const anglelbl = document.getElementById("anglelbl"), pRead = document.getElementById("pRead");
+const bSparse = document.getElementById("bSparse"), bCrowd = document.getElementById("bCrowd");
+let nFeat = 3, mode = "sparse", active = new Set(), dirs = [], nearest = [];
+const P2 = makeSpace(packC, {radius:0.46});
+function fib(n){                                 /* n directions spread as evenly as a sphere allows */
+  if(n<=3) return [[1,0,0],[0,1,0],[0,0,1]].slice(0,n);
+  /* spread over a hemisphere, since a direction and its opposite would count as the same slot */
+  const out=[]; const ga = Math.PI*(3-Math.sqrt(5));
+  for(let i=0;i<n;i++){ const y = 1 - (i+0.5)/n; const r=Math.sqrt(Math.max(0,1-y*y)); const th=ga*i; out.push([r*Math.cos(th), y, r*Math.sin(th)]); }
+  return out;
 }
-const nSlider = document.getElementById("nSlider");
-const nVal = document.getElementById("nVal");
-const anglelbl = document.getElementById("anglelbl");
-const pRead = document.getElementById("pRead");
-function drawPack(){
-  const n = parseInt(nSlider.value);
-  nVal.textContent = n;
-  pctx.setTransform(PDPR,0,0,PDPR,0,0);
-  const W = packC.clientWidth, H = packC.clientHeight;
-  pctx.clearRect(0,0,W,H);
-  const cx = W/2, cy = H/2, R = Math.min(W,H)*0.4;
-  pctx.strokeStyle = "rgba(201,204,198,0.9)";
-  pctx.lineWidth = 1;
-  pctx.beginPath(); pctx.arc(cx,cy,R,0,6.2832); pctx.stroke();
-  /* directions fan through the half-plane and reflect: n lines = 2n arrowheads */
-  for(let i=0;i<n;i++){
-    const a = Math.PI * i/n;
-    const x = Math.cos(a), y = Math.sin(a);
-    pctx.strokeStyle = "rgba(94,135,160,0.85)";
-    pctx.lineWidth = 1.6;
-    pctx.beginPath();
-    pctx.moveTo(cx - x*R, cy + y*R);
-    pctx.lineTo(cx + x*R, cy - y*R);
-    pctx.stroke();
-    pctx.fillStyle = "rgba(94,135,160,0.9)";
-    pctx.beginPath(); pctx.arc(cx + x*R, cy - y*R, 3, 0, 6.2832); pctx.fill();
+function rebuild(){
+  dirs = fib(nFeat);
+  let minAng = 180, pair=[0,1];
+  nearest = dirs.map(()=>0);
+  for(let i=0;i<dirs.length;i++) for(let j=i+1;j<dirs.length;j++){
+    const c = Math.abs(dirs[i][0]*dirs[j][0]+dirs[i][1]*dirs[j][1]+dirs[i][2]*dirs[j][2]);
+    const ang = Math.acos(Math.min(1,c))*180/Math.PI;
+    nearest[i]=Math.max(nearest[i],c); nearest[j]=Math.max(nearest[j],c);
+    if(ang<minAng){ minAng=ang; pair=[i,j]; }
   }
-  const minAngle = 180/n;
-  const interference = Math.cos(Math.PI/n);
-  anglelbl.innerHTML = `smallest angle between directions: <b>${minAngle.toFixed(1)}\u00b0</b> &middot; interference between neighbours: <b>${Math.max(0,interference).toFixed(2)}</b>`;
-  pRead.textContent =
-    n <= 2 ? "two directions, fully perpendicular. no interference. this is all the privacy a 2d space can offer." :
-    n <= 5 ? "more directions than the space owns perpendicular slots for. the crowding begins." :
-    n <= 12 ? "each direction now leans on its neighbours. tolerable, if they rarely fire together." :
-    "a crowd. every meaning bleeds into the next, and the model reads through the bleed.";
+  const k = mode==="sparse" ? Math.min(2,nFeat) : Math.max(2, Math.round(nFeat*0.6));
+  active = new Set(); const order = dirs.map((_,i)=>i).sort(()=>Math.random()-0.5); order.slice(0,k).forEach(i=>active.add(i));
+  const c = Math.cos(minAng*Math.PI/180);
+  anglelbl.textContent = nFeat + " directions \u00b7 smallest angle between any two: " + minAng.toFixed(1) + "\u00b0 \u00b7 interference between that pair: " + c.toFixed(2);
+  let sum=0, cnt=0; const act=[...active];
+  for(let i=0;i<act.length;i++) for(let j=i+1;j<act.length;j++){ const a=dirs[act[i]], b=dirs[act[j]]; sum+=Math.abs(a[0]*b[0]+a[1]*b[1]+a[2]*b[2]); cnt++; }
+  const meanI = cnt? sum/cnt : 0;
+  if(nFeat<=3) pRead.innerHTML = "three perpendicular directions: each has a slot of its own, and nothing interferes with anything.";
+  else if(mode==="sparse") pRead.innerHTML = nFeat + " features in a space with three perpendicular slots, but only " + k + " active at once. mean interference among the active pair: " + meanI.toFixed(2) + ". the crowding costs little while few speak.";
+  else pRead.innerHTML = k + " of " + nFeat + " features active together. mean interference among them: " + meanI.toFixed(2) + ". the same packing that was cheap when sparse becomes confusion when crowded.";
 }
-nSlider.addEventListener("input", drawPack);
-window.addEventListener("resize", sizePack);
-sizePack();
-</script>
-<script>
-/* the closing image: the collar's creatures in superposition */
-(function(){
-  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var wrap=document.getElementById('sx-wrap'), cv=document.getElementById('sx-cv'), ctx=cv.getContext('2d');
-  var dpr=Math.max(1,Math.min(2.5,window.devicePixelRatio||1)), W,H;
-  function ease(t){return t<0.5?2*t*t:1-Math.pow(-2*t+2,2)/2;}
-  function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
-
-  // the thirty-three symbols of the formulae
-  var SYM='()+-/2=BEF^cefhipqtvx\u00b7\u00d7\u0127\u0394\u03b5\u03bb\u03bd\u03c1\u03c6\u2080\u2207\u2265'.split('');
-  var OUTLINES={"shooting-star":{"aspect":0.82,"pts":[[0.016,0.0],[0.006,0.001],[0.0,0.018],[0.002,0.023],[0.007,0.034],[0.011,0.042],[0.015,0.048],[0.02,0.056],[0.024,0.068],[0.027,0.073],[0.032,0.081],[0.037,0.087],[0.039,0.092],[0.044,0.1],[0.048,0.106],[0.051,0.113],[0.056,0.123],[0.06,0.127],[0.065,0.133],[0.068,0.14],[0.072,0.145],[0.077,0.151],[0.08,0.158],[0.084,0.162],[0.089,0.168],[0.091,0.174],[0.096,0.18],[0.101,0.185],[0.104,0.189],[0.109,0.194],[0.113,0.201],[0.117,0.207],[0.121,0.212],[0.126,0.218],[0.129,0.222],[0.133,0.227],[0.137,0.231],[0.146,0.239],[0.155,0.25],[0.159,0.255],[0.163,0.264],[0.156,0.269],[0.141,0.268],[0.127,0.266],[0.109,0.265],[0.101,0.266],[0.099,0.283],[0.101,0.287],[0.106,0.292],[0.11,0.298],[0.113,0.301],[0.118,0.307],[0.124,0.314],[0.129,0.318],[0.133,0.323],[0.138,0.329],[0.141,0.332],[0.146,0.338],[0.15,0.342],[0.156,0.349],[0.165,0.357],[0.167,0.361],[0.172,0.367],[0.177,0.372],[0.179,0.376],[0.189,0.384],[0.195,0.39],[0.199,0.394],[0.202,0.399],[0.206,0.403],[0.211,0.409],[0.218,0.416],[0.222,0.419],[0.229,0.427],[0.237,0.433],[0.24,0.438],[0.245,0.443],[0.252,0.45],[0.255,0.454],[0.26,0.459],[0.265,0.464],[0.274,0.472],[0.279,0.478],[0.284,0.483],[0.289,0.488],[0.3,0.498],[0.304,0.502],[0.311,0.508],[0.317,0.515],[0.324,0.521],[0.329,0.527],[0.333,0.53],[0.341,0.538],[0.351,0.547],[0.354,0.55],[0.362,0.557],[0.371,0.566],[0.376,0.57],[0.383,0.577],[0.39,0.584],[0.399,0.591],[0.406,0.598],[0.415,0.606],[0.423,0.615],[0.432,0.622],[0.44,0.629],[0.446,0.635],[0.461,0.646],[0.465,0.651],[0.477,0.66],[0.484,0.668],[0.494,0.675],[0.504,0.684],[0.513,0.692],[0.52,0.697],[0.533,0.708],[0.539,0.713],[0.55,0.723],[0.557,0.729],[0.561,0.734],[0.56,0.741],[0.54,0.748],[0.532,0.749],[0.511,0.752],[0.495,0.755],[0.484,0.757],[0.467,0.759],[0.452,0.761],[0.437,0.764],[0.418,0.767],[0.406,0.768],[0.395,0.771],[0.38,0.778],[0.377,0.781],[0.378,0.787],[0.389,0.793],[0.395,0.795],[0.409,0.798],[0.417,0.799],[0.427,0.802],[0.438,0.805],[0.444,0.807],[0.457,0.809],[0.47,0.812],[0.476,0.814],[0.488,0.817],[0.496,0.819],[0.507,0.821],[0.518,0.824],[0.526,0.826],[0.537,0.828],[0.546,0.831],[0.552,0.833],[0.561,0.836],[0.582,0.846],[0.589,0.852],[0.593,0.857],[0.598,0.868],[0.601,0.874],[0.606,0.882],[0.609,0.886],[0.613,0.892],[0.618,0.902],[0.621,0.909],[0.626,0.919],[0.63,0.926],[0.633,0.93],[0.638,0.937],[0.643,0.949],[0.645,0.953],[0.65,0.962],[0.654,0.967],[0.659,0.976],[0.662,0.984],[0.666,0.994],[0.671,1.0],[0.696,1.0],[0.702,0.995],[0.707,0.983],[0.712,0.975],[0.715,0.969],[0.72,0.958],[0.723,0.948],[0.727,0.937],[0.732,0.922],[0.735,0.916],[0.74,0.902],[0.745,0.892],[0.765,0.89],[0.782,0.891],[0.802,0.894],[0.811,0.896],[0.828,0.898],[0.837,0.9],[0.85,0.903],[0.863,0.906],[0.877,0.907],[0.891,0.91],[0.905,0.913],[0.915,0.915],[0.933,0.917],[0.946,0.92],[0.967,0.921],[1.0,0.917],[1.0,0.913],[0.971,0.892],[0.917,0.857],[0.895,0.842],[0.827,0.798],[0.839,0.776],[0.845,0.77],[0.887,0.742],[0.909,0.727],[0.937,0.709],[0.954,0.695],[0.966,0.686],[0.962,0.676],[0.954,0.675],[0.945,0.676],[0.93,0.679],[0.917,0.681],[0.909,0.683],[0.895,0.686],[0.883,0.689],[0.877,0.69],[0.863,0.693],[0.855,0.696],[0.844,0.698],[0.833,0.7],[0.824,0.702],[0.815,0.705],[0.799,0.708],[0.793,0.709],[0.784,0.712],[0.774,0.715],[0.768,0.717],[0.756,0.721],[0.735,0.719],[0.732,0.715],[0.727,0.706],[0.724,0.7],[0.72,0.69],[0.715,0.681],[0.712,0.672],[0.707,0.662],[0.702,0.65],[0.7,0.645],[0.695,0.63],[0.69,0.618],[0.688,0.61],[0.683,0.597],[0.679,0.591],[0.674,0.575],[0.671,0.566],[0.667,0.555],[0.662,0.547],[0.659,0.53],[0.655,0.526],[0.65,0.511],[0.645,0.5],[0.643,0.493],[0.638,0.481],[0.635,0.474],[0.63,0.465],[0.626,0.45],[0.622,0.445],[0.618,0.426],[0.613,0.418],[0.61,0.41],[0.606,0.402],[0.601,0.385],[0.598,0.379],[0.593,0.366],[0.59,0.354],[0.585,0.343],[0.58,0.333],[0.578,0.32],[0.573,0.309],[0.568,0.295],[0.566,0.289],[0.561,0.272],[0.556,0.261],[0.554,0.253],[0.549,0.24],[0.545,0.232],[0.54,0.212],[0.537,0.203],[0.533,0.194],[0.528,0.182],[0.523,0.171],[0.521,0.162],[0.507,0.146],[0.487,0.153],[0.484,0.159],[0.479,0.177],[0.476,0.183],[0.471,0.205],[0.467,0.217],[0.463,0.232],[0.459,0.246],[0.455,0.264],[0.451,0.271],[0.446,0.297],[0.441,0.31],[0.435,0.314],[0.418,0.31],[0.415,0.306],[0.401,0.296],[0.393,0.288],[0.385,0.281],[0.378,0.275],[0.372,0.268],[0.365,0.262],[0.356,0.254],[0.348,0.246],[0.34,0.241],[0.327,0.23],[0.322,0.225],[0.31,0.215],[0.298,0.206],[0.291,0.2],[0.284,0.193],[0.273,0.184],[0.267,0.178],[0.259,0.171],[0.246,0.161],[0.241,0.156],[0.233,0.148],[0.218,0.138],[0.211,0.131],[0.2,0.122],[0.195,0.117],[0.184,0.108],[0.168,0.096],[0.162,0.091],[0.141,0.076],[0.127,0.064],[0.098,0.045],[0.034,0.006],[0.018,0.0]]},"coral":{"aspect":0.88,"pts":[[0.43,0.0],[0.415,0.001],[0.407,0.005],[0.398,0.01],[0.389,0.016],[0.365,0.039],[0.357,0.042],[0.344,0.042],[0.317,0.017],[0.303,0.011],[0.29,0.007],[0.278,0.005],[0.265,0.002],[0.237,0.002],[0.231,0.005],[0.214,0.018],[0.198,0.034],[0.193,0.042],[0.19,0.048],[0.188,0.069],[0.188,0.108],[0.19,0.117],[0.194,0.128],[0.198,0.136],[0.201,0.144],[0.206,0.152],[0.211,0.161],[0.217,0.17],[0.224,0.179],[0.26,0.212],[0.297,0.244],[0.306,0.257],[0.309,0.266],[0.311,0.283],[0.31,0.303],[0.308,0.312],[0.302,0.322],[0.277,0.328],[0.264,0.316],[0.261,0.308],[0.257,0.293],[0.253,0.272],[0.25,0.264],[0.242,0.252],[0.23,0.236],[0.215,0.223],[0.209,0.219],[0.198,0.216],[0.155,0.217],[0.145,0.221],[0.132,0.231],[0.125,0.242],[0.122,0.254],[0.119,0.268],[0.115,0.281],[0.102,0.292],[0.057,0.295],[0.045,0.298],[0.037,0.303],[0.025,0.311],[0.015,0.318],[0.009,0.326],[0.005,0.333],[0.002,0.339],[0.0,0.359],[0.001,0.392],[0.005,0.404],[0.008,0.411],[0.011,0.419],[0.017,0.428],[0.022,0.434],[0.028,0.445],[0.056,0.473],[0.074,0.486],[0.082,0.489],[0.095,0.493],[0.135,0.496],[0.159,0.499],[0.176,0.502],[0.191,0.506],[0.198,0.509],[0.203,0.512],[0.216,0.52],[0.224,0.531],[0.227,0.536],[0.234,0.546],[0.241,0.556],[0.255,0.568],[0.261,0.571],[0.272,0.575],[0.295,0.576],[0.33,0.576],[0.373,0.577],[0.382,0.581],[0.398,0.593],[0.403,0.599],[0.415,0.613],[0.422,0.623],[0.424,0.628],[0.428,0.638],[0.432,0.654],[0.435,0.669],[0.438,0.682],[0.442,0.695],[0.445,0.703],[0.448,0.709],[0.452,0.716],[0.456,0.724],[0.459,0.737],[0.461,0.751],[0.466,0.765],[0.469,0.777],[0.472,0.782],[0.477,0.791],[0.483,0.799],[0.486,0.806],[0.49,0.814],[0.492,0.827],[0.49,0.849],[0.487,0.858],[0.484,0.867],[0.481,0.876],[0.476,0.884],[0.474,0.89],[0.47,0.903],[0.466,0.915],[0.464,0.928],[0.465,0.94],[0.474,0.95],[0.483,0.955],[0.49,0.959],[0.498,0.963],[0.507,0.966],[0.514,0.969],[0.523,0.973],[0.532,0.976],[0.542,0.979],[0.549,0.982],[0.562,0.986],[0.581,0.989],[0.592,0.992],[0.608,0.995],[0.626,0.999],[0.652,1.0],[0.66,0.998],[0.664,0.982],[0.667,0.964],[0.67,0.955],[0.674,0.943],[0.677,0.932],[0.681,0.922],[0.684,0.915],[0.688,0.903],[0.691,0.89],[0.694,0.882],[0.698,0.871],[0.701,0.859],[0.705,0.85],[0.708,0.842],[0.711,0.834],[0.716,0.826],[0.723,0.817],[0.741,0.799],[0.748,0.789],[0.753,0.778],[0.757,0.773],[0.761,0.764],[0.773,0.75],[0.795,0.727],[0.814,0.713],[0.822,0.709],[0.83,0.705],[0.835,0.703],[0.843,0.699],[0.853,0.696],[0.859,0.693],[0.866,0.69],[0.875,0.686],[0.883,0.683],[0.89,0.678],[0.897,0.675],[0.907,0.67],[0.914,0.666],[0.926,0.657],[0.933,0.652],[0.947,0.638],[0.957,0.626],[0.967,0.613],[0.973,0.603],[0.975,0.588],[0.98,0.558],[0.984,0.548],[0.989,0.541],[0.991,0.536],[0.994,0.529],[0.999,0.52],[1.0,0.504],[0.999,0.472],[0.994,0.459],[0.991,0.45],[0.989,0.442],[0.984,0.434],[0.972,0.419],[0.961,0.411],[0.952,0.406],[0.944,0.403],[0.915,0.404],[0.908,0.406],[0.897,0.408],[0.875,0.407],[0.866,0.403],[0.85,0.401],[0.839,0.405],[0.816,0.426],[0.815,0.434],[0.812,0.457],[0.801,0.467],[0.794,0.47],[0.784,0.475],[0.763,0.494],[0.759,0.507],[0.759,0.521],[0.759,0.547],[0.757,0.555],[0.744,0.566],[0.735,0.569],[0.725,0.573],[0.717,0.576],[0.706,0.574],[0.701,0.56],[0.698,0.537],[0.694,0.53],[0.688,0.52],[0.684,0.513],[0.681,0.506],[0.678,0.499],[0.681,0.485],[0.688,0.475],[0.695,0.463],[0.699,0.452],[0.703,0.444],[0.708,0.435],[0.714,0.428],[0.732,0.409],[0.759,0.385],[0.765,0.383],[0.774,0.377],[0.8,0.356],[0.812,0.348],[0.818,0.345],[0.825,0.342],[0.833,0.338],[0.84,0.336],[0.848,0.332],[0.859,0.324],[0.876,0.312],[0.898,0.294],[0.916,0.274],[0.919,0.267],[0.923,0.261],[0.926,0.251],[0.93,0.238],[0.933,0.222],[0.936,0.21],[0.938,0.172],[0.935,0.152],[0.933,0.146],[0.928,0.136],[0.918,0.123],[0.907,0.116],[0.901,0.113],[0.889,0.11],[0.868,0.11],[0.863,0.113],[0.853,0.118],[0.835,0.132],[0.824,0.139],[0.817,0.142],[0.806,0.145],[0.791,0.147],[0.783,0.145],[0.775,0.14],[0.76,0.129],[0.751,0.117],[0.744,0.109],[0.735,0.099],[0.723,0.092],[0.709,0.091],[0.684,0.092],[0.674,0.097],[0.662,0.105],[0.657,0.115],[0.652,0.125],[0.649,0.137],[0.649,0.165],[0.652,0.18],[0.657,0.188],[0.66,0.196],[0.665,0.206],[0.669,0.219],[0.669,0.233],[0.666,0.241],[0.661,0.25],[0.647,0.264],[0.636,0.27],[0.631,0.273],[0.62,0.277],[0.607,0.285],[0.597,0.293],[0.591,0.302],[0.582,0.309],[0.57,0.305],[0.568,0.296],[0.56,0.282],[0.544,0.27],[0.534,0.267],[0.519,0.264],[0.511,0.26],[0.505,0.257],[0.494,0.247],[0.491,0.236],[0.487,0.227],[0.486,0.21],[0.487,0.167],[0.491,0.158],[0.494,0.15],[0.5,0.141],[0.503,0.133],[0.507,0.126],[0.509,0.118],[0.514,0.103],[0.514,0.08],[0.51,0.061],[0.508,0.053],[0.498,0.04],[0.485,0.027],[0.478,0.021],[0.469,0.012],[0.455,0.003],[0.439,0.0]]},"seahorse":{"aspect":0.459,"pts":[[0.418,0.0],[0.401,0.011],[0.392,0.022],[0.388,0.034],[0.386,0.045],[0.373,0.054],[0.349,0.062],[0.329,0.068],[0.309,0.075],[0.314,0.067],[0.305,0.061],[0.294,0.061],[0.298,0.055],[0.285,0.062],[0.27,0.072],[0.257,0.083],[0.244,0.092],[0.224,0.098],[0.205,0.105],[0.185,0.112],[0.163,0.115],[0.148,0.123],[0.148,0.135],[0.139,0.145],[0.118,0.15],[0.094,0.154],[0.072,0.157],[0.05,0.16],[0.026,0.158],[0.0,0.159],[0.0,0.168],[0.002,0.174],[0.007,0.182],[0.009,0.193],[0.007,0.206],[0.009,0.215],[0.028,0.217],[0.048,0.219],[0.074,0.218],[0.098,0.218],[0.12,0.211],[0.148,0.209],[0.172,0.206],[0.198,0.204],[0.22,0.199],[0.242,0.198],[0.259,0.199],[0.285,0.198],[0.312,0.202],[0.329,0.209],[0.333,0.219],[0.353,0.221],[0.37,0.212],[0.394,0.209],[0.418,0.206],[0.44,0.208],[0.468,0.206],[0.492,0.203],[0.508,0.211],[0.532,0.207],[0.553,0.201],[0.58,0.2],[0.603,0.195],[0.627,0.195],[0.63,0.201],[0.61,0.213],[0.586,0.223],[0.569,0.231],[0.545,0.24],[0.525,0.246],[0.51,0.253],[0.486,0.259],[0.464,0.267],[0.444,0.274],[0.42,0.283],[0.394,0.291],[0.375,0.299],[0.375,0.31],[0.355,0.32],[0.34,0.324],[0.32,0.333],[0.312,0.342],[0.294,0.35],[0.275,0.362],[0.266,0.373],[0.266,0.386],[0.257,0.397],[0.251,0.408],[0.248,0.419],[0.246,0.431],[0.244,0.443],[0.248,0.454],[0.251,0.463],[0.257,0.473],[0.259,0.485],[0.264,0.494],[0.268,0.504],[0.277,0.514],[0.283,0.521],[0.296,0.532],[0.314,0.543],[0.327,0.554],[0.349,0.559],[0.346,0.57],[0.353,0.579],[0.375,0.584],[0.401,0.584],[0.41,0.573],[0.436,0.575],[0.455,0.584],[0.468,0.594],[0.468,0.602],[0.473,0.609],[0.481,0.619],[0.486,0.629],[0.492,0.636],[0.501,0.648],[0.51,0.66],[0.514,0.666],[0.521,0.675],[0.532,0.686],[0.54,0.697],[0.551,0.706],[0.562,0.717],[0.571,0.726],[0.58,0.734],[0.59,0.744],[0.599,0.751],[0.608,0.761],[0.623,0.769],[0.627,0.778],[0.638,0.787],[0.647,0.797],[0.656,0.807],[0.662,0.817],[0.667,0.826],[0.671,0.832],[0.678,0.841],[0.678,0.852],[0.678,0.864],[0.673,0.874],[0.667,0.887],[0.656,0.898],[0.638,0.909],[0.619,0.919],[0.597,0.928],[0.575,0.934],[0.549,0.937],[0.527,0.941],[0.501,0.943],[0.475,0.945],[0.451,0.946],[0.423,0.945],[0.399,0.942],[0.375,0.936],[0.359,0.923],[0.353,0.912],[0.355,0.906],[0.362,0.913],[0.37,0.921],[0.394,0.93],[0.42,0.932],[0.444,0.932],[0.473,0.926],[0.49,0.916],[0.501,0.905],[0.505,0.892],[0.501,0.881],[0.49,0.87],[0.477,0.864],[0.473,0.859],[0.455,0.854],[0.429,0.848],[0.407,0.846],[0.381,0.844],[0.355,0.846],[0.331,0.849],[0.307,0.855],[0.294,0.863],[0.277,0.871],[0.268,0.879],[0.259,0.891],[0.251,0.903],[0.251,0.912],[0.253,0.921],[0.261,0.932],[0.264,0.939],[0.27,0.946],[0.279,0.957],[0.296,0.967],[0.316,0.975],[0.34,0.981],[0.366,0.987],[0.39,0.991],[0.414,0.996],[0.438,0.997],[0.466,1.0],[0.49,0.999],[0.516,0.998],[0.542,0.999],[0.566,0.995],[0.593,0.992],[0.617,0.991],[0.641,0.984],[0.667,0.979],[0.691,0.979],[0.71,0.973],[0.719,0.961],[0.741,0.955],[0.763,0.949],[0.763,0.938],[0.776,0.925],[0.8,0.917],[0.804,0.906],[0.806,0.893],[0.813,0.881],[0.826,0.871],[0.819,0.859],[0.817,0.848],[0.828,0.837],[0.824,0.826],[0.813,0.816],[0.813,0.807],[0.806,0.796],[0.793,0.784],[0.797,0.772],[0.778,0.764],[0.769,0.754],[0.767,0.747],[0.758,0.736],[0.743,0.727],[0.752,0.717],[0.741,0.708],[0.728,0.699],[0.73,0.687],[0.721,0.678],[0.704,0.668],[0.706,0.656],[0.695,0.644],[0.695,0.634],[0.702,0.621],[0.691,0.613],[0.693,0.604],[0.719,0.6],[0.725,0.609],[0.734,0.62],[0.745,0.63],[0.754,0.638],[0.778,0.642],[0.804,0.641],[0.83,0.638],[0.856,0.63],[0.878,0.621],[0.902,0.61],[0.922,0.599],[0.937,0.588],[0.946,0.578],[0.963,0.568],[0.972,0.555],[0.983,0.544],[0.987,0.532],[0.993,0.52],[0.998,0.508],[1.0,0.496],[0.998,0.485],[0.998,0.473],[0.993,0.462],[0.987,0.45],[0.976,0.441],[0.961,0.435],[0.937,0.435],[0.911,0.436],[0.885,0.438],[0.863,0.435],[0.871,0.424],[0.889,0.415],[0.885,0.405],[0.885,0.392],[0.895,0.381],[0.919,0.373],[0.937,0.367],[0.93,0.355],[0.924,0.343],[0.93,0.332],[0.948,0.319],[0.965,0.308],[0.952,0.297],[0.943,0.29],[0.943,0.278],[0.956,0.268],[0.98,0.265],[0.972,0.254],[0.952,0.249],[0.939,0.239],[0.935,0.231],[0.943,0.218],[0.941,0.209],[0.928,0.201],[0.915,0.193],[0.908,0.181],[0.926,0.176],[0.952,0.177],[0.946,0.167],[0.926,0.16],[0.902,0.159],[0.878,0.153],[0.869,0.143],[0.869,0.132],[0.852,0.124],[0.828,0.12],[0.808,0.115],[0.804,0.109],[0.8,0.097],[0.782,0.087],[0.758,0.085],[0.741,0.08],[0.73,0.077],[0.715,0.068],[0.706,0.058],[0.695,0.057],[0.682,0.056],[0.66,0.055],[0.651,0.048],[0.641,0.038],[0.625,0.034],[0.608,0.03],[0.586,0.031],[0.573,0.025],[0.56,0.021],[0.542,0.018],[0.527,0.012],[0.51,0.014],[0.49,0.021],[0.471,0.03],[0.444,0.032],[0.42,0.035],[0.425,0.023],[0.436,0.012],[0.425,0.007],[0.42,0.0]]},"osprey":{"aspect":1.067,"pts":[[0.775,1.0],[0.77,0.993],[0.769,0.982],[0.751,0.968],[0.741,0.964],[0.728,0.981],[0.72,0.975],[0.721,0.953],[0.726,0.942],[0.709,0.933],[0.698,0.934],[0.679,0.93],[0.67,0.923],[0.656,0.907],[0.646,0.901],[0.637,0.88],[0.63,0.872],[0.62,0.851],[0.617,0.84],[0.607,0.836],[0.585,0.839],[0.574,0.841],[0.559,0.857],[0.553,0.867],[0.538,0.884],[0.529,0.891],[0.513,0.904],[0.502,0.906],[0.482,0.916],[0.472,0.912],[0.455,0.925],[0.445,0.927],[0.427,0.915],[0.418,0.918],[0.399,0.931],[0.389,0.927],[0.385,0.917],[0.373,0.909],[0.364,0.914],[0.343,0.918],[0.337,0.907],[0.325,0.899],[0.314,0.895],[0.31,0.876],[0.3,0.874],[0.282,0.869],[0.284,0.858],[0.263,0.854],[0.254,0.848],[0.266,0.832],[0.277,0.829],[0.298,0.825],[0.308,0.821],[0.329,0.814],[0.339,0.811],[0.35,0.809],[0.37,0.799],[0.38,0.796],[0.4,0.788],[0.41,0.784],[0.43,0.776],[0.439,0.769],[0.459,0.761],[0.469,0.757],[0.46,0.749],[0.45,0.745],[0.429,0.737],[0.419,0.733],[0.403,0.719],[0.393,0.723],[0.378,0.704],[0.367,0.704],[0.357,0.698],[0.344,0.68],[0.333,0.68],[0.316,0.665],[0.307,0.657],[0.294,0.638],[0.286,0.63],[0.273,0.613],[0.27,0.601],[0.249,0.597],[0.24,0.59],[0.224,0.576],[0.215,0.569],[0.203,0.552],[0.193,0.549],[0.171,0.545],[0.162,0.539],[0.161,0.518],[0.15,0.517],[0.139,0.513],[0.119,0.505],[0.109,0.501],[0.095,0.485],[0.103,0.476],[0.086,0.462],[0.077,0.457],[0.058,0.445],[0.049,0.439],[0.037,0.42],[0.047,0.417],[0.069,0.419],[0.067,0.411],[0.049,0.395],[0.04,0.388],[0.023,0.374],[0.015,0.365],[0.007,0.355],[0.0,0.335],[0.009,0.34],[0.028,0.352],[0.037,0.359],[0.056,0.369],[0.066,0.372],[0.085,0.381],[0.088,0.37],[0.07,0.355],[0.062,0.346],[0.046,0.329],[0.038,0.32],[0.025,0.301],[0.019,0.291],[0.008,0.271],[0.005,0.26],[0.005,0.248],[0.018,0.254],[0.026,0.264],[0.041,0.282],[0.047,0.291],[0.064,0.306],[0.072,0.315],[0.09,0.331],[0.099,0.337],[0.117,0.349],[0.128,0.352],[0.123,0.337],[0.115,0.328],[0.101,0.309],[0.094,0.301],[0.081,0.283],[0.075,0.273],[0.063,0.254],[0.06,0.242],[0.056,0.232],[0.049,0.21],[0.047,0.2],[0.058,0.187],[0.061,0.199],[0.069,0.22],[0.075,0.229],[0.088,0.249],[0.092,0.259],[0.107,0.277],[0.113,0.287],[0.127,0.305],[0.136,0.312],[0.153,0.328],[0.162,0.334],[0.181,0.347],[0.19,0.352],[0.2,0.358],[0.218,0.369],[0.229,0.372],[0.248,0.382],[0.258,0.385],[0.281,0.387],[0.291,0.391],[0.311,0.4],[0.321,0.402],[0.341,0.411],[0.352,0.415],[0.373,0.42],[0.383,0.424],[0.404,0.43],[0.414,0.432],[0.435,0.44],[0.445,0.444],[0.464,0.456],[0.472,0.464],[0.48,0.473],[0.491,0.493],[0.497,0.503],[0.511,0.521],[0.519,0.529],[0.536,0.547],[0.545,0.554],[0.563,0.567],[0.573,0.57],[0.592,0.581],[0.602,0.585],[0.623,0.583],[0.631,0.574],[0.645,0.556],[0.652,0.546],[0.666,0.528],[0.672,0.519],[0.676,0.508],[0.687,0.488],[0.691,0.477],[0.702,0.457],[0.706,0.446],[0.716,0.427],[0.72,0.416],[0.729,0.395],[0.735,0.385],[0.746,0.365],[0.752,0.355],[0.762,0.335],[0.768,0.326],[0.779,0.305],[0.784,0.296],[0.793,0.274],[0.8,0.266],[0.811,0.245],[0.815,0.235],[0.823,0.226],[0.835,0.206],[0.838,0.195],[0.848,0.175],[0.853,0.164],[0.86,0.143],[0.863,0.132],[0.869,0.11],[0.871,0.098],[0.877,0.076],[0.879,0.065],[0.883,0.042],[0.885,0.031],[0.897,0.023],[0.897,0.035],[0.897,0.061],[0.899,0.072],[0.897,0.083],[0.899,0.101],[0.906,0.093],[0.914,0.072],[0.919,0.062],[0.925,0.039],[0.929,0.029],[0.936,0.007],[0.941,0.0],[0.946,0.021],[0.947,0.034],[0.943,0.057],[0.94,0.068],[0.933,0.09],[0.933,0.102],[0.948,0.098],[0.955,0.089],[0.958,0.078],[0.966,0.057],[0.972,0.047],[0.986,0.042],[0.986,0.054],[0.98,0.077],[0.98,0.089],[0.973,0.11],[0.973,0.122],[0.99,0.108],[1.0,0.11],[0.997,0.133],[0.994,0.145],[0.989,0.168],[0.984,0.177],[0.986,0.201],[0.983,0.211],[0.974,0.233],[0.968,0.242],[0.964,0.253],[0.969,0.275],[0.964,0.285],[0.955,0.306],[0.949,0.316],[0.947,0.337],[0.942,0.347],[0.933,0.368],[0.93,0.379],[0.921,0.399],[0.914,0.409],[0.908,0.431],[0.902,0.441],[0.889,0.46],[0.887,0.472],[0.872,0.49],[0.864,0.498],[0.857,0.508],[0.847,0.528],[0.841,0.538],[0.825,0.555],[0.819,0.565],[0.801,0.578],[0.793,0.586],[0.806,0.603],[0.817,0.606],[0.836,0.615],[0.846,0.619],[0.864,0.633],[0.871,0.641],[0.883,0.662],[0.887,0.671],[0.891,0.695],[0.896,0.705],[0.897,0.727],[0.894,0.739],[0.89,0.749],[0.88,0.736],[0.872,0.728],[0.851,0.723],[0.84,0.724],[0.82,0.731],[0.81,0.735],[0.791,0.747],[0.785,0.757],[0.771,0.774],[0.774,0.784],[0.779,0.807],[0.785,0.816],[0.79,0.839],[0.793,0.85],[0.802,0.871],[0.805,0.883],[0.813,0.891],[0.833,0.899],[0.845,0.899],[0.865,0.905],[0.874,0.914],[0.874,0.936],[0.869,0.946],[0.851,0.957],[0.841,0.959],[0.834,0.94],[0.825,0.933],[0.806,0.928],[0.797,0.937],[0.799,0.959],[0.802,0.971],[0.79,0.986],[0.784,0.979],[0.775,1.0]]},"nightingale":{"aspect":0.918,"pts":[[0.175,1.0],[0.166,0.998],[0.157,0.994],[0.144,0.991],[0.134,0.993],[0.113,0.992],[0.106,0.985],[0.09,0.978],[0.08,0.976],[0.077,0.959],[0.08,0.95],[0.06,0.948],[0.049,0.948],[0.029,0.944],[0.023,0.937],[0.009,0.929],[0.0,0.925],[0.002,0.907],[0.007,0.899],[0.013,0.892],[0.029,0.881],[0.037,0.874],[0.053,0.863],[0.062,0.858],[0.078,0.847],[0.086,0.84],[0.102,0.829],[0.109,0.822],[0.125,0.811],[0.134,0.807],[0.149,0.793],[0.157,0.786],[0.173,0.775],[0.181,0.768],[0.196,0.754],[0.204,0.747],[0.212,0.743],[0.225,0.73],[0.233,0.723],[0.245,0.709],[0.253,0.702],[0.265,0.687],[0.269,0.679],[0.279,0.663],[0.283,0.655],[0.294,0.639],[0.297,0.631],[0.307,0.615],[0.305,0.606],[0.291,0.594],[0.286,0.585],[0.267,0.582],[0.259,0.575],[0.253,0.558],[0.243,0.557],[0.233,0.553],[0.221,0.539],[0.221,0.53],[0.207,0.52],[0.198,0.516],[0.185,0.503],[0.186,0.494],[0.19,0.479],[0.181,0.475],[0.163,0.468],[0.156,0.461],[0.154,0.443],[0.161,0.436],[0.146,0.426],[0.137,0.422],[0.121,0.411],[0.117,0.403],[0.112,0.395],[0.119,0.379],[0.111,0.372],[0.096,0.358],[0.092,0.35],[0.087,0.332],[0.081,0.325],[0.072,0.309],[0.075,0.3],[0.088,0.288],[0.081,0.281],[0.065,0.267],[0.06,0.259],[0.051,0.243],[0.051,0.233],[0.066,0.226],[0.076,0.226],[0.074,0.215],[0.066,0.209],[0.062,0.2],[0.05,0.186],[0.045,0.178],[0.039,0.16],[0.041,0.151],[0.056,0.147],[0.064,0.151],[0.082,0.159],[0.09,0.164],[0.092,0.153],[0.087,0.145],[0.075,0.13],[0.072,0.122],[0.063,0.105],[0.063,0.095],[0.06,0.077],[0.063,0.069],[0.07,0.062],[0.086,0.074],[0.094,0.081],[0.108,0.093],[0.114,0.1],[0.13,0.114],[0.133,0.106],[0.124,0.09],[0.122,0.081],[0.117,0.063],[0.114,0.055],[0.112,0.036],[0.112,0.026],[0.117,0.008],[0.121,0.0],[0.136,0.007],[0.141,0.016],[0.145,0.024],[0.151,0.041],[0.156,0.049],[0.164,0.065],[0.169,0.073],[0.18,0.089],[0.184,0.097],[0.196,0.112],[0.202,0.12],[0.214,0.135],[0.218,0.143],[0.23,0.158],[0.237,0.165],[0.249,0.179],[0.257,0.186],[0.27,0.201],[0.275,0.209],[0.29,0.223],[0.297,0.23],[0.306,0.233],[0.321,0.246],[0.327,0.254],[0.34,0.266],[0.347,0.273],[0.361,0.285],[0.369,0.289],[0.385,0.303],[0.392,0.31],[0.407,0.324],[0.412,0.332],[0.418,0.349],[0.42,0.358],[0.428,0.375],[0.431,0.383],[0.438,0.4],[0.446,0.407],[0.45,0.415],[0.467,0.423],[0.473,0.415],[0.481,0.399],[0.486,0.391],[0.493,0.374],[0.497,0.366],[0.507,0.35],[0.513,0.342],[0.525,0.327],[0.532,0.322],[0.547,0.309],[0.556,0.304],[0.574,0.297],[0.583,0.293],[0.602,0.289],[0.613,0.289],[0.634,0.289],[0.645,0.289],[0.656,0.289],[0.675,0.293],[0.684,0.289],[0.703,0.282],[0.712,0.28],[0.732,0.278],[0.732,0.284],[0.716,0.295],[0.708,0.302],[0.695,0.314],[0.691,0.322],[0.688,0.34],[0.699,0.341],[0.72,0.341],[0.729,0.345],[0.741,0.35],[0.731,0.353],[0.722,0.356],[0.704,0.362],[0.696,0.369],[0.684,0.384],[0.682,0.393],[0.673,0.409],[0.668,0.417],[0.659,0.433],[0.651,0.44],[0.643,0.457],[0.643,0.466],[0.639,0.484],[0.639,0.494],[0.635,0.512],[0.635,0.522],[0.648,0.534],[0.657,0.538],[0.675,0.544],[0.686,0.546],[0.696,0.546],[0.718,0.546],[0.727,0.55],[0.746,0.553],[0.755,0.557],[0.776,0.558],[0.785,0.561],[0.807,0.561],[0.816,0.565],[0.832,0.576],[0.843,0.576],[0.863,0.58],[0.873,0.58],[0.894,0.58],[0.905,0.58],[0.926,0.579],[0.936,0.576],[0.946,0.575],[0.965,0.572],[0.975,0.568],[0.995,0.565],[1.0,0.572],[0.989,0.588],[0.981,0.595],[0.965,0.606],[0.955,0.609],[0.936,0.613],[0.931,0.619],[0.95,0.624],[0.96,0.626],[0.954,0.641],[0.947,0.646],[0.928,0.654],[0.919,0.659],[0.911,0.661],[0.891,0.665],[0.882,0.668],[0.894,0.681],[0.891,0.689],[0.874,0.698],[0.863,0.699],[0.843,0.702],[0.832,0.702],[0.814,0.7],[0.813,0.707],[0.818,0.722],[0.809,0.726],[0.791,0.732],[0.78,0.732],[0.759,0.732],[0.748,0.732],[0.734,0.743],[0.725,0.747],[0.716,0.745],[0.696,0.741],[0.686,0.74],[0.67,0.75],[0.659,0.751],[0.642,0.743],[0.632,0.74],[0.614,0.746],[0.603,0.746],[0.586,0.738],[0.578,0.732],[0.559,0.737],[0.551,0.736],[0.538,0.723],[0.528,0.721],[0.508,0.721],[0.5,0.714],[0.491,0.71],[0.474,0.718],[0.468,0.726],[0.481,0.74],[0.492,0.74],[0.512,0.743],[0.521,0.747],[0.534,0.76],[0.538,0.768],[0.534,0.787],[0.527,0.792],[0.51,0.788],[0.505,0.779],[0.502,0.761],[0.492,0.758],[0.475,0.766],[0.467,0.772],[0.466,0.758],[0.456,0.754],[0.448,0.752],[0.434,0.74],[0.424,0.741],[0.426,0.757],[0.43,0.765],[0.434,0.781],[0.429,0.789],[0.416,0.803],[0.407,0.797],[0.406,0.781],[0.399,0.774],[0.38,0.778],[0.371,0.782],[0.357,0.777],[0.346,0.777],[0.331,0.79],[0.326,0.798],[0.319,0.805],[0.309,0.821],[0.305,0.829],[0.294,0.844],[0.291,0.853],[0.279,0.868],[0.275,0.876],[0.265,0.892],[0.26,0.9],[0.251,0.916],[0.246,0.924],[0.234,0.939],[0.229,0.947],[0.218,0.962],[0.212,0.97],[0.2,0.985],[0.192,0.989],[0.175,1.0]]},"moth-tiger":{"aspect":1.437,"pts":[[0.717,1.0],[0.7,1.0],[0.683,1.0],[0.668,0.997],[0.653,0.993],[0.637,0.991],[0.623,0.987],[0.611,0.98],[0.599,0.971],[0.581,0.95],[0.576,0.932],[0.571,0.915],[0.567,0.895],[0.563,0.876],[0.558,0.859],[0.556,0.838],[0.555,0.815],[0.55,0.773],[0.547,0.753],[0.548,0.734],[0.545,0.714],[0.543,0.693],[0.534,0.701],[0.536,0.721],[0.536,0.744],[0.538,0.763],[0.536,0.803],[0.537,0.826],[0.535,0.848],[0.537,0.868],[0.537,0.894],[0.537,0.912],[0.54,0.932],[0.536,0.953],[0.518,0.977],[0.508,0.987],[0.494,0.991],[0.482,0.984],[0.472,0.974],[0.462,0.963],[0.456,0.948],[0.451,0.93],[0.452,0.908],[0.453,0.862],[0.456,0.841],[0.458,0.823],[0.459,0.802],[0.461,0.782],[0.461,0.763],[0.463,0.741],[0.463,0.716],[0.454,0.703],[0.452,0.724],[0.453,0.746],[0.45,0.764],[0.448,0.786],[0.445,0.806],[0.442,0.828],[0.441,0.849],[0.438,0.869],[0.43,0.908],[0.425,0.927],[0.421,0.944],[0.414,0.958],[0.403,0.968],[0.391,0.976],[0.377,0.978],[0.365,0.987],[0.337,0.994],[0.323,1.0],[0.307,0.997],[0.29,0.997],[0.274,0.996],[0.259,0.991],[0.246,0.986],[0.232,0.981],[0.218,0.977],[0.194,0.964],[0.181,0.957],[0.171,0.947],[0.162,0.935],[0.151,0.927],[0.141,0.917],[0.132,0.904],[0.123,0.894],[0.106,0.868],[0.098,0.855],[0.09,0.841],[0.082,0.828],[0.075,0.815],[0.071,0.795],[0.066,0.777],[0.062,0.76],[0.058,0.74],[0.062,0.703],[0.068,0.685],[0.075,0.671],[0.082,0.658],[0.091,0.645],[0.1,0.634],[0.11,0.624],[0.12,0.614],[0.142,0.595],[0.153,0.588],[0.166,0.58],[0.178,0.573],[0.191,0.568],[0.201,0.557],[0.191,0.547],[0.177,0.543],[0.165,0.537],[0.142,0.52],[0.129,0.514],[0.117,0.506],[0.105,0.499],[0.094,0.49],[0.085,0.477],[0.074,0.468],[0.064,0.46],[0.046,0.435],[0.039,0.421],[0.034,0.404],[0.029,0.386],[0.024,0.369],[0.021,0.349],[0.017,0.33],[0.014,0.31],[0.011,0.29],[0.004,0.25],[0.001,0.23],[0.003,0.207],[0.003,0.188],[0.001,0.167],[0.0,0.144],[0.002,0.125],[0.004,0.103],[0.013,0.066],[0.019,0.05],[0.024,0.033],[0.031,0.019],[0.04,0.007],[0.053,0.001],[0.069,0.001],[0.082,0.006],[0.097,0.01],[0.121,0.024],[0.134,0.03],[0.145,0.04],[0.156,0.049],[0.166,0.057],[0.176,0.068],[0.186,0.079],[0.195,0.089],[0.214,0.112],[0.223,0.124],[0.233,0.134],[0.242,0.147],[0.251,0.158],[0.259,0.17],[0.268,0.182],[0.277,0.194],[0.287,0.204],[0.304,0.228],[0.313,0.24],[0.322,0.251],[0.33,0.266],[0.339,0.277],[0.347,0.289],[0.356,0.302],[0.364,0.315],[0.379,0.342],[0.387,0.355],[0.394,0.369],[0.404,0.381],[0.41,0.397],[0.417,0.411],[0.425,0.424],[0.433,0.437],[0.446,0.467],[0.454,0.481],[0.46,0.468],[0.457,0.448],[0.46,0.43],[0.469,0.418],[0.479,0.408],[0.476,0.389],[0.469,0.375],[0.453,0.348],[0.445,0.335],[0.436,0.323],[0.425,0.313],[0.417,0.3],[0.408,0.29],[0.401,0.276],[0.394,0.261],[0.408,0.282],[0.417,0.296],[0.426,0.306],[0.435,0.318],[0.446,0.328],[0.454,0.341],[0.463,0.352],[0.471,0.365],[0.478,0.379],[0.501,0.381],[0.51,0.394],[0.52,0.384],[0.525,0.368],[0.532,0.352],[0.539,0.336],[0.547,0.325],[0.556,0.312],[0.576,0.292],[0.585,0.28],[0.594,0.269],[0.602,0.256],[0.609,0.247],[0.603,0.263],[0.595,0.274],[0.585,0.286],[0.576,0.297],[0.556,0.318],[0.547,0.33],[0.54,0.345],[0.534,0.361],[0.529,0.378],[0.524,0.394],[0.53,0.409],[0.54,0.421],[0.543,0.458],[0.535,0.473],[0.545,0.483],[0.552,0.468],[0.559,0.454],[0.566,0.44],[0.573,0.425],[0.582,0.414],[0.588,0.397],[0.604,0.371],[0.611,0.356],[0.619,0.343],[0.627,0.33],[0.635,0.316],[0.642,0.303],[0.651,0.292],[0.66,0.279],[0.677,0.254],[0.685,0.241],[0.695,0.23],[0.703,0.218],[0.712,0.207],[0.72,0.194],[0.729,0.182],[0.738,0.171],[0.748,0.159],[0.765,0.135],[0.775,0.124],[0.784,0.114],[0.793,0.102],[0.803,0.092],[0.813,0.08],[0.822,0.07],[0.832,0.06],[0.853,0.04],[0.864,0.032],[0.877,0.024],[0.89,0.019],[0.901,0.011],[0.915,0.006],[0.93,0.003],[0.945,0.0],[0.958,0.007],[0.974,0.032],[0.982,0.045],[0.986,0.065],[0.992,0.08],[0.994,0.101],[0.996,0.124],[0.999,0.145],[1.0,0.165],[0.995,0.205],[0.995,0.224],[0.995,0.244],[0.993,0.261],[0.989,0.282],[0.986,0.302],[0.983,0.322],[0.979,0.341],[0.976,0.361],[0.966,0.395],[0.961,0.414],[0.957,0.432],[0.947,0.443],[0.939,0.455],[0.928,0.466],[0.916,0.473],[0.91,0.487],[0.887,0.504],[0.875,0.51],[0.863,0.517],[0.851,0.527],[0.839,0.533],[0.828,0.542],[0.813,0.546],[0.801,0.552],[0.804,0.566],[0.83,0.578],[0.842,0.585],[0.854,0.592],[0.865,0.601],[0.876,0.609],[0.886,0.621],[0.896,0.631],[0.905,0.641],[0.922,0.667],[0.929,0.681],[0.935,0.697],[0.942,0.713],[0.942,0.731],[0.939,0.753],[0.935,0.772],[0.93,0.789],[0.925,0.806],[0.912,0.836],[0.904,0.849],[0.896,0.864],[0.889,0.878],[0.88,0.889],[0.872,0.901],[0.862,0.912],[0.852,0.922],[0.831,0.943],[0.822,0.953],[0.812,0.963],[0.799,0.97],[0.787,0.977],[0.773,0.981],[0.759,0.986],[0.744,0.99],[0.717,1.0]]},"moth-swallowtail":{"aspect":1.883,"pts":[[0.505,1.0],[0.493,0.998],[0.485,0.989],[0.481,0.974],[0.477,0.957],[0.471,0.942],[0.468,0.925],[0.463,0.908],[0.459,0.893],[0.452,0.859],[0.448,0.842],[0.445,0.823],[0.444,0.806],[0.444,0.789],[0.442,0.768],[0.44,0.748],[0.438,0.729],[0.437,0.68],[0.437,0.659],[0.438,0.64],[0.436,0.621],[0.438,0.599],[0.437,0.58],[0.431,0.582],[0.426,0.595],[0.419,0.608],[0.405,0.629],[0.396,0.637],[0.387,0.644],[0.377,0.65],[0.366,0.652],[0.354,0.655],[0.341,0.655],[0.331,0.652],[0.308,0.644],[0.299,0.638],[0.289,0.631],[0.281,0.623],[0.272,0.616],[0.262,0.61],[0.253,0.605],[0.242,0.601],[0.231,0.595],[0.216,0.576],[0.209,0.563],[0.205,0.548],[0.202,0.527],[0.202,0.505],[0.206,0.486],[0.21,0.471],[0.216,0.458],[0.23,0.433],[0.237,0.424],[0.245,0.414],[0.253,0.407],[0.256,0.395],[0.245,0.39],[0.234,0.388],[0.221,0.388],[0.207,0.388],[0.187,0.397],[0.177,0.405],[0.166,0.407],[0.154,0.407],[0.145,0.401],[0.135,0.395],[0.127,0.384],[0.119,0.377],[0.103,0.358],[0.096,0.347],[0.091,0.331],[0.084,0.32],[0.077,0.311],[0.07,0.299],[0.063,0.288],[0.058,0.273],[0.052,0.26],[0.042,0.23],[0.037,0.215],[0.033,0.198],[0.029,0.181],[0.026,0.166],[0.022,0.147],[0.016,0.132],[0.011,0.121],[0.0,0.09],[0.0,0.07],[0.007,0.058],[0.013,0.045],[0.02,0.036],[0.029,0.028],[0.04,0.024],[0.051,0.021],[0.062,0.017],[0.087,0.015],[0.099,0.013],[0.111,0.013],[0.124,0.015],[0.135,0.019],[0.146,0.021],[0.156,0.026],[0.166,0.032],[0.185,0.045],[0.194,0.051],[0.203,0.06],[0.212,0.068],[0.221,0.075],[0.229,0.083],[0.237,0.092],[0.245,0.102],[0.254,0.109],[0.269,0.13],[0.277,0.139],[0.285,0.147],[0.293,0.158],[0.301,0.166],[0.309,0.173],[0.318,0.183],[0.326,0.19],[0.345,0.205],[0.354,0.211],[0.364,0.218],[0.373,0.224],[0.382,0.232],[0.392,0.237],[0.401,0.245],[0.41,0.252],[0.419,0.258],[0.436,0.275],[0.446,0.275],[0.452,0.264],[0.458,0.249],[0.457,0.23],[0.46,0.213],[0.467,0.2],[0.467,0.188],[0.447,0.177],[0.436,0.173],[0.425,0.171],[0.415,0.164],[0.406,0.158],[0.396,0.153],[0.387,0.143],[0.379,0.136],[0.371,0.124],[0.358,0.104],[0.352,0.09],[0.346,0.075],[0.34,0.062],[0.335,0.047],[0.332,0.03],[0.328,0.013],[0.334,0.023],[0.346,0.049],[0.351,0.06],[0.357,0.073],[0.364,0.085],[0.371,0.096],[0.379,0.105],[0.387,0.117],[0.395,0.124],[0.403,0.134],[0.422,0.147],[0.432,0.153],[0.441,0.158],[0.453,0.16],[0.462,0.168],[0.471,0.175],[0.479,0.181],[0.486,0.168],[0.505,0.16],[0.512,0.169],[0.522,0.175],[0.531,0.168],[0.54,0.162],[0.551,0.158],[0.56,0.151],[0.57,0.145],[0.588,0.13],[0.596,0.122],[0.604,0.113],[0.611,0.102],[0.618,0.09],[0.625,0.079],[0.631,0.068],[0.639,0.056],[0.645,0.043],[0.658,0.019],[0.665,0.013],[0.662,0.034],[0.658,0.051],[0.653,0.064],[0.646,0.077],[0.64,0.09],[0.633,0.102],[0.618,0.122],[0.61,0.13],[0.602,0.139],[0.594,0.147],[0.585,0.156],[0.575,0.162],[0.566,0.168],[0.555,0.173],[0.544,0.177],[0.527,0.192],[0.533,0.203],[0.539,0.217],[0.54,0.237],[0.54,0.256],[0.546,0.269],[0.554,0.279],[0.562,0.273],[0.577,0.252],[0.585,0.245],[0.595,0.237],[0.603,0.228],[0.612,0.222],[0.621,0.215],[0.63,0.207],[0.639,0.2],[0.648,0.192],[0.666,0.177],[0.674,0.168],[0.682,0.16],[0.69,0.149],[0.697,0.139],[0.705,0.13],[0.713,0.119],[0.72,0.111],[0.736,0.09],[0.744,0.083],[0.753,0.075],[0.761,0.066],[0.77,0.058],[0.779,0.049],[0.787,0.043],[0.796,0.034],[0.806,0.028],[0.825,0.017],[0.836,0.011],[0.846,0.008],[0.858,0.006],[0.868,0.002],[0.881,0.0],[0.894,0.0],[0.904,0.004],[0.928,0.008],[0.938,0.013],[0.949,0.019],[0.959,0.023],[0.968,0.028],[0.978,0.036],[0.986,0.043],[0.995,0.051],[1.0,0.068],[0.994,0.104],[0.988,0.119],[0.983,0.132],[0.976,0.143],[0.969,0.154],[0.963,0.168],[0.958,0.181],[0.952,0.194],[0.945,0.23],[0.939,0.243],[0.934,0.258],[0.929,0.273],[0.923,0.286],[0.918,0.299],[0.912,0.313],[0.905,0.326],[0.899,0.337],[0.889,0.367],[0.882,0.38],[0.876,0.392],[0.87,0.403],[0.863,0.416],[0.855,0.424],[0.845,0.429],[0.832,0.429],[0.815,0.412],[0.808,0.403],[0.799,0.395],[0.789,0.388],[0.778,0.386],[0.766,0.382],[0.755,0.386],[0.747,0.395],[0.754,0.405],[0.769,0.424],[0.776,0.437],[0.783,0.446],[0.789,0.46],[0.794,0.475],[0.8,0.488],[0.798,0.508],[0.796,0.527],[0.788,0.561],[0.782,0.573],[0.774,0.582],[0.765,0.589],[0.755,0.595],[0.745,0.603],[0.735,0.606],[0.726,0.614],[0.716,0.62],[0.699,0.635],[0.689,0.642],[0.68,0.648],[0.669,0.653],[0.659,0.657],[0.647,0.659],[0.635,0.661],[0.624,0.661],[0.603,0.653],[0.594,0.646],[0.586,0.637],[0.58,0.623],[0.576,0.608],[0.571,0.591],[0.564,0.588],[0.563,0.61],[0.563,0.631],[0.563,0.672],[0.563,0.697],[0.562,0.718],[0.562,0.742],[0.559,0.761],[0.557,0.782],[0.553,0.798],[0.551,0.821],[0.545,0.857],[0.542,0.874],[0.539,0.893],[0.533,0.908],[0.53,0.925],[0.526,0.942],[0.522,0.959],[0.518,0.974],[0.505,1.0]]}};
-  var N=130;                       // default characters per form
-  var SHIMMER_RATE=2.6, SHIMMER_PERIOD=275/15;   // her rate, her frames at 15 fps, in seconds
-
-  // ---- outline generators, all in a unit box centred at 0 ----
-  function resample(polys,n){
-    var segs=[],L=0;
-    polys.forEach(function(pl){for(var i=1;i<pl.length;i++){var a=pl[i-1],b=pl[i],l=Math.hypot(b[0]-a[0],b[1]-a[1]);segs.push([a,b,l]);L+=l;}});
-    var out=[];
-    for(var k=0;k<n;k++){var d=(k+0.5)*L/n,acc=0;for(var s=0;s<segs.length;s++){var sg=segs[s];if(acc+sg[2]>=d){var t=(d-acc)/sg[2];out.push([sg[0][0]+(sg[1][0]-sg[0][0])*t,sg[0][1]+(sg[1][1]-sg[0][1])*t]);break;}acc+=sg[2];}}
-    while(out.length<n)out.push(out[out.length-1]||[0,0]);
-    return out;
+nSlider.addEventListener("input", ()=>{ nFeat = parseInt(nSlider.value,10); nVal.textContent = nFeat; rebuild(); });
+bSparse.addEventListener("click", ()=>{ mode="sparse"; bSparse.classList.add("on"); bCrowd.classList.remove("on"); rebuild(); });
+bCrowd.addEventListener("click", ()=>{ mode="crowded"; bCrowd.classList.add("on"); bSparse.classList.remove("on"); rebuild(); });
+function heat(c){ /* silver -> coral -> madder as interference rises */
+  const t = Math.max(0, Math.min(1, (c-0.15)/0.7));
+  const a=[201,204,198], b=[240,138,82], d=[140,74,50];
+  const m = t<0.5 ? a.map((v,i)=>v+(b[i]-v)*(t/0.5)) : b.map((v,i)=>v+(d[i]-v)*((t-0.5)/0.5));
+  return "rgb("+m.map(Math.round).join(",")+")";
+}
+function drawPack(now){
+  const {ctx, st, project} = P2; const W=st.W, H=st.H;
+  if(!st.drag && now - st.last > 1500) st.theta += 0.0014;
+  ctx.clearRect(0,0,W,H);
+  /* the sphere: three great circles */
+  ctx.save(); ctx.strokeStyle="rgba(138,141,135,0.28)"; ctx.lineWidth=0.8;
+  for(const plane of [0,1,2]){ ctx.beginPath(); for(let k=0;k<=72;k++){ const t=k/72*6.283; const v=[0,0,0]; v[(plane+1)%3]=Math.cos(t); v[(plane+2)%3]=Math.sin(t); const q=project(...v); k?ctx.lineTo(q.sx,q.sy):ctx.moveTo(q.sx,q.sy); } ctx.stroke(); }
+  ctx.restore();
+  const o = project(0,0,0);
+  const items = dirs.map((d,i)=>({d,i,q:project(...d)})).sort((A,B)=>A.q.depth-B.q.depth);
+  for(const {d,i,q} of items){
+    const on = active.has(i);
+    const col = heat(nearest[i]);
+    axisLine(ctx, o, q, on ? col : "rgba(138,141,135,"+(0.18+0.25*q.depth).toFixed(2)+")", on ? 2.2 : 1);
+    ctx.beginPath(); ctx.arc(q.sx,q.sy, on ? 4 : 2.2, 0, 6.283);
+    ctx.fillStyle = on ? col : SILVER; ctx.globalAlpha = 0.5+0.5*q.depth; ctx.fill(); ctx.globalAlpha=1;
   }
-  function bez(p0,p1,p2,p3,steps){var pts=[];for(var i=0;i<=steps;i++){var t=i/steps,u=1-t;pts.push([u*u*u*p0[0]+3*u*u*t*p1[0]+3*u*t*t*p2[0]+t*t*t*p3[0],u*u*u*p0[1]+3*u*u*t*p1[1]+3*u*t*t*p2[1]+t*t*t*p3[1]]);}return pts;}
-  function circle(cx,cy,r,steps){var p=[];for(var i=0;i<=steps;i++){var a=i/steps*Math.PI*2;p.push([cx+r*Math.cos(a),cy+r*Math.sin(a)]);}return p;}
-
-  function oStar(){var p=[];for(var i=0;i<=10;i++){var a=-Math.PI/2+i*Math.PI/5,rr=(i%2===0)?1:0.46;p.push([rr*Math.cos(a),rr*Math.sin(a)]);}return [p];}
-  function oCoral(){var polys=[];function br(x,y,a,l,d){if(d===0)return;var x2=x+Math.cos(a)*l,y2=y+Math.sin(a)*l;polys.push([[x,y],[x2,y2]]);br(x2,y2,a-0.55,l*0.68,d-1);br(x2,y2,a+0.55,l*0.68,d-1);}br(0,0.95,-Math.PI/2,0.85,4);return polys;}
-  function oSeahorse(){return [bez([-0.1,1],[-0.9,0.4],[0.6,0.1],[-0.25,-0.45],40).concat(bez([-0.25,-0.45],[-0.7,-0.75],[0.15,-1.0],[0.45,-0.6],30)), circle(0.18,-0.78,0.1,16)];}
-  function oStarSeahorse(){var s=oSeahorse();var st=oStar()[0].map(function(p){return [p[0]*0.3+0.55,p[1]*0.3-1.05];});s.push(st);return s;}
-  function oGalaxy(){var polys=[];for(var arm=0;arm<3;arm++){var p=[];for(var t=0;t<=3.4*Math.PI;t+=0.06){var r=0.06*Math.exp(0.27*t);if(r>1.05)break;var a=t+arm*2*Math.PI/3;p.push([r*Math.cos(a),r*Math.sin(a)]);}polys.push(p);}polys.push(circle(0,0,0.14,20));return polys;}
-  function oSpiral(){var p=[];for(var t=0;t<=6.6;t+=0.05){var r=0.15*t;p.push([r*Math.cos(t),r*Math.sin(t)]);}return [p];}
-  function oTide(){var polys=[];for(var k=-1;k<=1;k++){var p=[];for(var x=-1;x<=1.0001;x+=0.04){p.push([x,k*0.45+Math.sin(x*Math.PI*1.6+k)*0.18]);}polys.push(p);}return polys;}
-  // the letter: sampled from the rendered glyph's edge
-  function oLetter(ch){
-    var s=220,oc=document.createElement('canvas');oc.width=s;oc.height=s;var g=oc.getContext('2d');
-    g.font='300 '+(s*0.95)+'px Jost, sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#000';g.fillText(ch,s/2,s/2+s*0.03);
-    var d=g.getImageData(0,0,s,s).data, edge=[];
-    for(var y=1;y<s-1;y++)for(var x=1;x<s-1;x++){var i=(y*s+x)*4+3;if(d[i]>128){if(d[i-4]<=128||d[i+4]<=128||d[i-s*4]<=128||d[i+s*4]<=128)edge.push([x,y]);}}
-    if(!edge.length)return [circle(0,0,0.8,40)];
-    var minx=1e9,maxx=-1e9,miny=1e9,maxy=-1e9;edge.forEach(function(p){minx=Math.min(minx,p[0]);maxx=Math.max(maxx,p[0]);miny=Math.min(miny,p[1]);maxy=Math.max(maxy,p[1]);});
-    var sc=2/Math.max(maxx-minx,maxy-miny), cx=(minx+maxx)/2, cy=(miny+maxy)/2;
-    var rnd=mulberry32(11);edge.sort(function(){return rnd()-0.5;});
-    var pts=edge.slice(0,220).map(function(p){return [(p[0]-cx)*sc,(p[1]-cy)*sc];});
-    return {points:pts};
+  /* the active pair's interference as a faint arc between them, when both are active and few */
+  if(active.size===2){
+    const [i,j]=[...active]; const a=dirs[i], b=dirs[j];
+    ctx.save(); ctx.strokeStyle=TURQ; ctx.lineWidth=1.2; ctx.setLineDash([2,3]); ctx.beginPath();
+    for(let k=0;k<=24;k++){ const t=k/24; let v=[0,1,2].map(m=>a[m]*(1-t)+b[m]*t); const l=Math.hypot(...v)||1; v=v.map(x=>x/l*0.55); const q=project(...v); k?ctx.lineTo(q.sx,q.sy):ctx.moveTo(q.sx,q.sy); }
+    ctx.stroke(); ctx.restore();
   }
-
-  // ---- meanings, in her palettes (two shades, alternating) ----
-  function oFile(key){var o=OUTLINES[key];return {file:o.pts,aspect:o.aspect};}
-  var meanings=[
-    {n:'shooting star', pal:['#FBDB71','#C59B10'], make:function(){return oFile('shooting-star');}, dx:-0.16, dy:-0.1, r:0.0, sc:0.95, cnt:200},
-    {n:'coral', pal:['#ffb88a','#DB8B55'], make:function(){return oFile('coral');}, dx:0.16, dy:-0.1, r:0.0, sc:0.95, cnt:200},
-    {n:'seahorse', pal:['#7ef0e5','#2FA89A'], make:function(){return oFile('seahorse');}, dx:0.0, dy:0.0, r:0.0, sc:1.0, cnt:200},
-    {n:'osprey', pal:['#B09972','#7E6A48'], make:function(){return oFile('osprey');}, dx:-0.14, dy:0.12, r:0.0, sc:1.0, cnt:200},
-    {n:'nightingale', pal:['#B7DBF3','#7E9DBE'], make:function(){return oFile('nightingale');}, dx:0.14, dy:0.12, r:0.0, sc:0.95, cnt:200},
-    {n:'scarlet tiger', pal:['#EFC9C4','#E2A09B'], make:function(){return oFile('moth-tiger');}, dx:-0.02, dy:-0.16, r:0.0, sc:0.95, cnt:200},
-    {n:'sphinx moth', pal:['#E0D08E','#C8A83C'], make:function(){return oFile('moth-swallowtail');}, dx:0.02, dy:0.16, r:0.0, sc:0.95, cnt:200}
-  ];
-  var TOTAL=meanings.length;
-
-  function build(m,seed){
-    var n=m.cnt||N, o=m.make(), pts;
-    if(o.file){ // her traced outline: normalised 0..1 on both axes, y downward; fitted by the larger side, in her aspect box
-      var asp=o.aspect, sx=asp>1?1:asp, sy=asp>1?1/asp:1;
-      pts=[]; for(var q=0;q<n;q++){var fp=o.file[Math.floor(q*(o.file.length-1)/(n-1))];pts.push([(fp[0]-0.5)*2*sx,(fp[1]-0.5)*2*sy]);}
-    } else if(o.points){pts=o.points;} else {pts=resample(o,n);}
-    var rnd=mulberry32(seed);
-    var chars=[]; for(var i=0;i<n;i++)chars.push(SYM[Math.floor(rnd()*SYM.length)]);
-    m.count=n; m.pts=pts; m.chars=chars;
-    m.phase=[]; m.cloud=[];
-    for(var k=0;k<n;k++){m.phase.push(rnd()*Math.PI*2);var a=rnd()*Math.PI*2,rr=Math.sqrt(rnd())*1.35;m.cloud.push([rr*Math.cos(a),rr*Math.sin(a)]);}
-    m.laid=false;m.t0=0;m.tgo=0;
-  }
-  meanings.forEach(function(m,i){build(m,100+i*7);});
-  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){meanings.forEach(function(m,i){if(m.n==='letter'){var was=m.laid,t0=m.t0;build(m,100+i*7);m.laid=was;m.t0=t0;}});draw(performance.now());});}
-
-  var order=[], lifted=null, liftT0=0;
-
-  function layout(){W=wrap.clientWidth;H=wrap.clientHeight;cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);draw(performance.now());}
-
-  function drawForm(m,now,strength,lift){
-    var R=Math.min(W,H)*0.21*m.sc, cx=W/2+m.dx*W, cy=H/2+m.dy*H;
-    var gather=m.t0?Math.min(1,(now-m.t0)/(reduce?350:1200)):1;
-    var release=m.tgo?Math.min(1,(now-m.tgo)/(reduce?300:900)):0;
-    var t=now/1000;
-    var fs=Math.max(9,R*0.13)*(lift?1.08:1);
-    ctx.font='400 '+fs+'px "IBM Plex Mono", ui-monospace, monospace';
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    var cr=Math.cos(m.r),sr=Math.sin(m.r);
-    for(var i=0;i<m.count;i++){
-      var g=ease(Math.max(0,Math.min(1,gather*1.15-(i%7)*0.02)));
-      var tp=m.pts[i], cp=m.cloud[i];
-      var ux=cp[0]+(tp[0]-cp[0])*g, uy=cp[1]+(tp[1]-cp[1])*g;
-      if(release>0){var rl=ease(release);ux=ux+(cp[0]*1.4-ux)*rl;uy=uy+(cp[1]*1.4-uy)*rl;}
-      var x=cx+(ux*cr-uy*sr)*R, y=cy+(ux*sr+uy*cr)*R - (lift?lift*10:0);
-      var sh=0.85+0.15*Math.sin(SHIMMER_RATE*2*Math.PI*t/SHIMMER_PERIOD+m.phase[i]);
-      var a=strength*sh*g*(1-release);
-      if(a<=0.01)continue;
-      ctx.globalAlpha=a; ctx.fillStyle=m.pal[i%2];
-      ctx.fillText(m.chars[i],x,y);
-    }
-    ctx.globalAlpha=1;
-  }
-
-  function draw(now){
-    ctx.clearRect(0,0,W,H);
-    ctx.fillStyle='#f8fefe';ctx.fillRect(0,0,W,H);
-    var dim = lifted ? 0.55 : 1;
-    for(var i=0;i<order.length;i++){var m=order[i];if(m===lifted)continue;drawForm(m,now,0.9*dim,0);}
-    if(lifted){var lt=Math.min(1,(now-liftT0)/500);drawForm(lifted,now,1,ease(lt));}
-    for(var j=0;j<meanings.length;j++){var mm=meanings[j];if(!mm.laid&&mm.tgo)drawForm(mm,now,0.9,0);}
-  }
-
-  var running=false;
-  function frame(now){
-    draw(now);
-    var alive=order.length>0||!!lifted;
-    for(var j=0;j<meanings.length;j++){var m=meanings[j];if(m.tgo&&now-m.tgo>1000)m.tgo=0;if(m.tgo)alive=true;}
-    if(alive)requestAnimationFrame(frame);else{running=false;draw(now);}
-  }
-  function kick(){if(!running){running=true;requestAnimationFrame(frame);}}
-
-  // ---- controls ----
-  var sheetsEl=document.getElementById('sx-sheets'), btns=[];
-  meanings.forEach(function(m){
-    var b=document.createElement('button');b.className='sheet';
-    b.innerHTML='<i style="background:'+m.pal[1]+'"></i><span>'+m.n+'</span><span class="st">lay</span>';
-    b.addEventListener('click',function(){
-      if(!m.laid){m.laid=true;m.t0=performance.now();m.tgo=0;order.push(m);}
-      else { lifted=m; liftT0=performance.now(); setTimeout(function(){ if(lifted===m){lifted=null;update();} }, reduce?700:1600); }
-      update(); kick();
-    });
-    sheetsEl.appendChild(b); btns.push(b);
-  });
-  document.getElementById('sx-b-all').addEventListener('click',function(){var now=performance.now();meanings.forEach(function(m,i){if(!m.laid){m.laid=true;m.t0=now+i*110;m.tgo=0;order.push(m);}});update();kick();});
-  document.getElementById('sx-b-clear').addEventListener('click',function(){var now=performance.now();meanings.forEach(function(m){if(m.laid){m.laid=false;m.t0=0;m.tgo=now;}});order=[];lifted=null;update();kick();});
-
-  function update(){
-    var n=order.length;
-    btns.forEach(function(b,i){var m=meanings[i];b.classList.toggle('laid',m.laid);b.querySelector('.st').textContent=m.laid?(lifted===m?'emerging':'laid \u00b7 tap to lift'):'lay';});
-    document.getElementById('sx-count').textContent = n===0?'the field is bare':(n+' of '+TOTAL+' laid');
-    var r=document.getElementById('sx-reading');
-    if(lifted){
-      r.innerHTML='<b>'+lifted.n+'</b>, lifted: recognition. '+(n<=3?'<span class="dim">It emerges clean; with so few beneath it, little shows through. The meaning is recoverable.</span>':
-        '<span class="dim">It comes up, but the others shimmer through it, because they were gathered in the same field. Still there, still legible, and stained by everything laid beneath. That stain is interference, the price of the pile.</span>');
-      return;
-    }
-    if(n===0)r.innerHTML='<span class="dim">The field is bare. Lay a meaning and watch it gather.</span>';
-    else if(n<=2)r.innerHTML=n+' laid. <span class="dim">Each form still reads clearly; their characters keep mostly clear of one another. When few are held at once, one field carries them without confusion. This is the sparse, ordinary state of a network.</span>';
-    else if(n<=4)r.innerHTML=n+' laid. <span class="dim">The outlines begin to cross and the characters of one form drift into the space of another. Tap a laid form to lift it and see how much of the rest comes up with it.</span>';
-    else if(n<TOTAL)r.innerHTML=n+' laid. <span class="dim">The field is filling. Every form is entirely present and each is harder to see. Nothing has been removed; it is all still here, superimposed past reading.</span>';
-    else r.innerHTML='All '+TOTAL+' laid. <span class="dim">Pattern before recognition. The field holds every form and shows none. This is the animation\u2019s own opening cloud, arrived at from the other side: not the moment before a form has emerged, but the moment after all of them have, and can no longer be told apart. Lift any one and it comes out of the crowd.</span>';
-  }
-
-  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(layout,150);});
-  layout(); update();
-})();
+  requestAnimationFrame(drawPack);
+}
+rebuild(); requestAnimationFrame(drawPack);
 </script>
 <script>
 window.addEventListener("pageshow", e=>{
