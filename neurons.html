@@ -267,6 +267,8 @@ body{animation:pagein 620ms ease both}
 .colophon a{color:inherit;text-decoration:none;border-bottom:1px solid var(--silver)}
 .sources a{color:inherit;text-decoration:none;border-bottom:1px solid var(--silver)}
 .sources a:hover{border-bottom-color:var(--ink-soft)}
+#neuronC,#stackC{width:100%;height:380px;display:block;border-radius:4px;background:#ffffff;border:1px solid var(--hair);cursor:grab;touch-action:none}
+#neuronC.dragging,#stackC.dragging{cursor:grabbing}
 </style>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
 </head>
@@ -324,14 +326,14 @@ body{animation:pagein 620ms ease both}
 <div class="bleed">
   <div class="panel">
     <p class="plabel">one neuron, fed three words</p>
-    <svg id="neuron" viewBox="0 0 640 230" role="img" aria-label="A single neuron computing a weighted sum"></svg>
+    <canvas id="neuronC" role="img" aria-label="Three input axes in a turning space, the neuron drawn as a weight arrow, and each word as a point whose projection onto the arrow is its activation"></canvas>
     <div class="btnrow">
       <button class="quiet" id="wLight" type="button">feed it: light</button>
       <button class="quiet" id="wSea" type="button">feed it: sea</button>
       <button class="quiet" id="wMoth" type="button">feed it: moth</button>
     </div>
     <p class="calc" id="calc"></p>
-    <p class="readout" id="nRead">press a word.</p>
+    <p class="readout" id="nRead">drag to turn &middot; press a word to follow the arithmetic.</p>
   </div>
 </div>
 
@@ -345,15 +347,13 @@ body{animation:pagein 620ms ease both}
   <p class="seckick">ii &middot; layers and blocks</p>
   <p>One neuron produces one number. A <em>layer</em> of neurons is thousands of them reading the same inputs side by side, each with its own weights. In a transformer, a feed-forward network passes a token&rsquo;s vector through such a layer and combines the results to produce a new vector: the same token, re-described.</p>
   <p>Each transformer <em>block</em> therefore contains two main kinds of calculation. First, attention lets each token draw information from the tokens before it. Then the feed-forward network reshapes each token&rsquo;s vector on its own. A transformer is made of these blocks stacked one above another, often dozens deep in contemporary LLMs.</p>
-  <p>Below, the sentence from the poems climbs the stack. Each token&rsquo;s vector is shown as a strip of values. Send the sentence upward and watch each representation change, <em>beam</em> most of all.</p>
+  <p>Below, the sentence from the poems climbs the stack. Each token&rsquo;s vector is shown as a position in a small space, with beam&rsquo;s values listed beneath. Send the sentence upward and watch each representation change, <em>beam</em> most of all.</p>
 </section>
 
 <div class="bleed">
   <div class="panel">
     <p class="plabel">the sentence climbs the stack</p>
-    <div id="stack">
-      <div class="stgrid" id="stgrid"></div>
-    </div>
+    <canvas id="stackC" role="img" aria-label="Translucent block sheets stacked in a turning space, with the seven tokens rising through them as threads"></canvas>
     <div class="btnrow">
       <button class="quiet" id="upBtn" type="button">send the sentence up one block</button>
       <button class="quiet" id="resetBtn" type="button">start again</button>
@@ -406,141 +406,146 @@ body{animation:pagein 620ms ease both}
 </footer>
 
 <script>
-const NS = "http://www.w3.org/2000/svg";
+/* ---------- shared: a small turning space ---------- */
+const INK="#2B2E28", SOFT="#5A5E55", SILVER="#C9CCC6", TURQ="#179fa0", GOLD="#c59b10", MADDER="#8C4A32";
+function makeSpace(canvas, opts){
+  const ctx = canvas.getContext("2d");
+  const st = {theta:opts.theta||0.6, tilt:opts.tilt||0.34, drag:false, px:0, py:0, last:0, W:0, H:0, dpr:1, moved:false};
+  function size(){ st.dpr=Math.min(2,window.devicePixelRatio||1); st.W=canvas.clientWidth; st.H=canvas.clientHeight; canvas.width=Math.round(st.W*st.dpr); canvas.height=Math.round(st.H*st.dpr); ctx.setTransform(st.dpr,0,0,st.dpr,0,0); }
+  function project(x,y,z){
+    const c=Math.cos(st.theta), sn=Math.sin(st.theta);
+    const xr=x*c+z*sn, zr=-x*sn+z*c;
+    const ct=Math.cos(st.tilt), stl=Math.sin(st.tilt);
+    const yr=y*ct-zr*stl, zz=y*stl+zr*ct;
+    const R=Math.min(st.W,st.H)*(opts.radius||0.4);
+    return {sx:st.W/2+xr*R, sy:st.H/2-yr*R+(opts.dy||0), depth:(zz+1.6)/3.2};
+  }
+  canvas.addEventListener("pointerdown",e=>{st.drag=true;st.px=e.clientX;st.py=e.clientY;canvas.setPointerCapture(e.pointerId);canvas.classList.add("dragging");st.moved=false;});
+  canvas.addEventListener("pointermove",e=>{if(!st.drag)return;const dx=e.clientX-st.px,dy=e.clientY-st.py;if(Math.abs(dx)+Math.abs(dy)>2)st.moved=true;st.theta+=dx*0.008;st.tilt=Math.max(-1.2,Math.min(1.2,st.tilt+dy*0.006));st.px=e.clientX;st.py=e.clientY;st.last=performance.now();});
+  canvas.addEventListener("pointerup",e=>{st.drag=false;canvas.classList.remove("dragging");if(!st.moved&&opts.onTap)opts.onTap(e);});
+  canvas.addEventListener("pointerleave",()=>{st.drag=false;canvas.classList.remove("dragging");});
+  window.addEventListener("resize",size); size();
+  return {ctx,st,project,canvas};
+}
+function line(ctx,p0,p1,color,width,dash){ctx.save();if(dash)ctx.setLineDash(dash);ctx.strokeStyle=color;ctx.lineWidth=width;ctx.beginPath();ctx.moveTo(p0.sx,p0.sy);ctx.lineTo(p1.sx,p1.sy);ctx.stroke();ctx.restore();}
+function label(ctx,p,text,color,font,dx,dy){ctx.fillStyle=color;ctx.font=font||"italic 12px Georgia, serif";ctx.textAlign="left";ctx.fillText(text,p.sx+(dx||6),p.sy+(dy||4));}
 
-/* ---------- one neuron ---------- */
+/* ---------- one neuron: three inputs as axes, the weights as an arrow ---------- */
 const FEATS = ["light","water","motion"];
 const WTS = [0.9, -0.4, 0.3];
 const WORDS = { light:[0.90,0.10,0.30], sea:[0.15,0.90,0.40], moth:[0.60,0.05,0.75] };
-
-const nsvg = document.getElementById("neuron");
-const IY = [55, 115, 175], IX = 120, CX = 360, CY = 115, OX = 560;
-
-const wires = FEATS.map((f,i)=>{
-  const w = document.createElementNS(NS,"path");
-  w.setAttribute("class","wire " + (WTS[i]>=0?"pos":"neg"));
-  w.setAttribute("d",`M${IX+46},${IY[i]} C ${IX+130},${IY[i]} ${CX-130},${CY} ${CX-26},${CY}`);
-  w.style.strokeWidth = Math.abs(WTS[i])*7;
-  w.style.opacity = 0.75;
-  nsvg.appendChild(w);
-  const lbl = document.createElementNS(NS,"text");
-  lbl.setAttribute("x",IX+80); lbl.setAttribute("y",IY[i]-8);
-  lbl.textContent = "\u00d7 " + WTS[i].toFixed(1);
-  nsvg.appendChild(lbl);
-  const name = document.createElementNS(NS,"text");
-  name.setAttribute("x",IX-6); name.setAttribute("y",IY[i]-12);
-  name.setAttribute("text-anchor","end");
-  name.textContent = f;
-  nsvg.appendChild(name);
-  const val = document.createElementNS(NS,"text");
-  val.setAttribute("class","val");
-  val.setAttribute("x",IX-6); val.setAttribute("y",IY[i]+4);
-  val.setAttribute("text-anchor","end");
-  nsvg.appendChild(val);
-  return {val};
-});
-const cell = document.createElementNS(NS,"circle");
-cell.setAttribute("class","cell");
-cell.setAttribute("cx",CX); cell.setAttribute("cy",CY); cell.setAttribute("r",24);
-nsvg.appendChild(cell);
-const sumT = document.createElementNS(NS,"text");
-sumT.setAttribute("class","val"); sumT.setAttribute("x",CX); sumT.setAttribute("y",CY+4);
-sumT.setAttribute("text-anchor","middle");
-nsvg.appendChild(sumT);
-const outWire = document.createElementNS(NS,"path");
-outWire.setAttribute("class","out");
-outWire.setAttribute("d",`M${CX+26},${CY} L${OX},${CY}`);
-outWire.style.strokeWidth = 1;
-nsvg.appendChild(outWire);
-const outT = document.createElementNS(NS,"text");
-outT.setAttribute("class","val"); outT.setAttribute("x",OX+8); outT.setAttribute("y",CY+4);
-nsvg.appendChild(outT);
-
-const calc = document.getElementById("calc");
-const nRead = document.getElementById("nRead");
-function feed(word){
-  const v = WORDS[word];
-  let sum = 0;
-  const terms = v.map((x,i)=>{ sum += x*WTS[i];
-    wires[i].val.textContent = x.toFixed(2);
-    return `(${x.toFixed(2)} \u00d7 ${WTS[i].toFixed(1)})`; });
-  const out = Math.max(0, sum);
-  sumT.textContent = sum.toFixed(2);
-  outT.textContent = out.toFixed(2);
-  outWire.style.strokeWidth = 1 + out*9;
-  outWire.style.opacity = out > 0 ? 0.95 : 0.35;
-  calc.innerHTML = terms.join(" + ") + ` = <b>${sum.toFixed(2)}</b> \u2192 activation \u2192 <b>${out.toFixed(2)}</b>`;
-  nRead.textContent = out > 0
-    ? `${word}: the neuron fires at ${out.toFixed(2)}.`
-    : `${word}: the sum is negative, so the activation holds it at zero. silence.`;
+const calc = document.getElementById("calc"), nRead = document.getElementById("nRead");
+const neuronC = document.getElementById("neuronC");
+let fedWord = null;
+const P1 = makeSpace(neuronC, {radius:0.46, theta:0.95, tilt:0.5, dy:-8, onTap:e=>{
+  const r=neuronC.getBoundingClientRect(); const mx=e.clientX-r.left,my=e.clientY-r.top; let best=null,bd=22;
+  for(const w in WORDS){const q=P1.project(...S(WORDS[w]));const d=Math.hypot(q.sx-mx,q.sy-my);if(d<bd){bd=d;best=w;}}
+  if(best) feed(best);
+}});
+/* inputs live in [0,1]^3; the space is centred so the origin sits low-left */
+function S(v){ return [v[0]-0.45, v[1]-0.45, v[2]-0.45]; }
+const WL = Math.hypot(...WTS), WU = WTS.map(a=>a/WL);
+function dot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];}
+function feed(w){
+  fedWord = w;
+  const x = WORDS[w]; const terms = x.map((v,i)=>v*WTS[i]); const sum = terms.reduce((a,b)=>a+b,0); const out = Math.max(0,sum);
+  calc.innerHTML = x.map((v,i)=>`(${v.toFixed(2)} &times; ${WTS[i]})`).join(" + ") + ` = ${sum.toFixed(2)} &rarr; activation &rarr; <b>${out.toFixed(2)}</b>`;
+  nRead.innerHTML = out>0 ? `<em>${w}</em>: the neuron fires at ${out.toFixed(2)}. its point sits above the zero plane, and its shadow falls along the weight arrow.`
+                          : `<em>${w}</em>: the weighted sum is ${sum.toFixed(2)}. the point lies below the zero plane, and the activation function holds the output at 0.`;
 }
 document.getElementById("wLight").addEventListener("click",()=>feed("light"));
 document.getElementById("wSea").addEventListener("click",()=>feed("sea"));
 document.getElementById("wMoth").addEventListener("click",()=>feed("moth"));
-feed("light");
+function drawNeuron(now){
+  const {ctx,st,project}=P1; const W=st.W,H=st.H;
+  if(!st.drag && now-st.last>1500) st.theta+=0.0015;
+  ctx.clearRect(0,0,W,H);
+  const O = project(...S([0,0,0]));
+  /* the zero plane: where the weighted sum is exactly zero */
+  const u = (()=>{const a=[-WU[1],WU[0],0];const l=Math.hypot(...a);return a.map(x=>x/l);})();
+  const v = [WU[1]*u[2]-WU[2]*u[1], WU[2]*u[0]-WU[0]*u[2], WU[0]*u[1]-WU[1]*u[0]];
+  ctx.save(); ctx.fillStyle="rgba(140,74,50,0.06)"; ctx.strokeStyle="rgba(140,74,50,0.35)"; ctx.lineWidth=0.8; ctx.beginPath();
+  [[-0.9,-0.9],[0.9,-0.9],[0.9,0.9],[-0.9,0.9]].forEach(([a,b],k)=>{const p=[0,1,2].map(i=>a*u[i]+b*v[i]);const q=project(...S([0,0,0]).map((c,i)=>c+p[i]));k?ctx.lineTo(q.sx,q.sy):ctx.moveTo(q.sx,q.sy);});
+  ctx.closePath(); ctx.fill(); ctx.stroke(); ctx.restore();
+  /* the three input axes */
+  FEATS.forEach((f,i)=>{ const e=[0,0,0]; e[i]=1.15; const q=project(...S(e)); line(ctx,O,q,SILVER,1); label(ctx,q,f.toUpperCase(),"#8A8D87","9px system-ui, sans-serif",6,14); });
+  /* the weights, as an arrow from the origin */
+  const tip = project(...S(WU.map(a=>a*0.95)));
+  line(ctx,O,tip,INK,1.6); ctx.beginPath(); ctx.arc(tip.sx,tip.sy,3,0,6.283); ctx.fillStyle=INK; ctx.fill();
+  label(ctx,tip,"weights",INK,"11px system-ui, sans-serif",8,-6);
+  /* the words */
+  for(const w in WORDS){
+    const x=WORDS[w]; const q=project(...S(x)); const sum=dot(x,WTS); const on = w===fedWord;
+    if(on){
+      const t = sum/WL;                                  /* signed length along the weight direction */
+      const foot = project(...S(WU.map(a=>a*t)));
+      line(ctx,q,foot,"rgba(43,46,40,0.45)",1,[2,3]);
+      if(sum>0){ line(ctx,O,foot,TURQ,3.2); ctx.beginPath(); ctx.arc(foot.sx,foot.sy,3,0,6.283); ctx.fillStyle=TURQ; ctx.fill(); }
+      else { line(ctx,O,foot,SILVER,2,[3,3]); ctx.beginPath(); ctx.arc(foot.sx,foot.sy,3,0,6.283); ctx.fillStyle=SILVER; ctx.fill(); }
+    }
+    ctx.beginPath(); ctx.arc(q.sx,q.sy,on?5.5:4,0,6.283); ctx.fillStyle = sum>0 ? GOLD : MADDER; ctx.globalAlpha=0.5+0.5*q.depth; ctx.fill(); ctx.globalAlpha=1;
+    label(ctx,q,w,on?INK:SOFT,on?"italic 14px Georgia, serif":"italic 12px Georgia, serif",8,-9);
+  }
+  requestAnimationFrame(drawNeuron);
+}
+requestAnimationFrame(drawNeuron);
 
-/* ---------- the stack ---------- */
+/* ---------- the stack: seven tokens rising through translucent blocks ---------- */
 const TOKS = ["the","echo","of","a","beam","never","sent"];
 const NV = 6, MAXSTAGE = 3;
-let stage = 0;
+let stage = 0, shown = 0, animFrom = 0, animT0 = 0;
 function base(t,i){ return 0.5 + 0.5*Math.sin(1.9*(i+1)*(t+1.3)); }
 function ctxv(i){ return 0.5 + 0.5*Math.sin(2.2*(i+1)*0.9 + 0.6); }
 const MIX = [0.35,0.55,0.30,0.30,0.85,0.45,0.60];   /* how far each token travels; beam most */
-function val(t,i,s){
-  const m = (s/MAXSTAGE)*MIX[t];
-  return (1-m)*base(t,i) + m*ctxv(i);
-}
-function lerp(a,b,t){return a+(b-a)*t}
-function valColour(v){
-  const tq=[47,168,154], mid=[248,254,254], gold=[197,155,16];
-  const c = v<0.5
-    ? [lerp(tq[0],mid[0],v*2), lerp(tq[1],mid[1],v*2), lerp(tq[2],mid[2],v*2)]
-    : [lerp(mid[0],gold[0],(v-0.5)*2), lerp(mid[1],gold[1],(v-0.5)*2), lerp(mid[2],gold[2],(v-0.5)*2)];
-  return `rgb(${c[0]|0},${c[1]|0},${c[2]|0})`;
-}
-const grid = document.getElementById("stgrid");
-const cells = [];
-TOKS.forEach((t,ti)=>{
-  const lbl = document.createElement("span");
-  lbl.className = "striplbl"; lbl.textContent = t;
-  const row = document.createElement("div");
-  row.className = "svals";
-  const rowCells = [];
-  for(let i=0;i<NV;i++){
-    const c = document.createElement("i");
-    row.appendChild(c); rowCells.push(c);
-  }
-  if(t === "beam"){
-    const wrap = document.createElement("div"); wrap.className = "beamrow";
-    wrap.appendChild(lbl); grid.appendChild(wrap);
-  } else grid.appendChild(lbl);
-  grid.appendChild(row);
-  cells.push(rowCells);
-});
-const beamnums = document.getElementById("beamnums");
-const sRead = document.getElementById("sRead");
+function val(t,i,s){ const m=(s/MAXSTAGE)*MIX[t]; return (1-m)*base(t,i)+m*ctxv(i); }
+function pos(t,s){ return [ (val(t,0,s)*2-1)*0.72, -0.78 + s*0.52, (val(t,1,s)*2-1)*0.72 ]; }
+const beamnums = document.getElementById("beamnums"), sRead = document.getElementById("sRead");
 const CAPTIONS = [
   "the sentence waits at the bottom of the stack.",
   "block one: each token has mixed in what it attended to.",
   "block two: the neurons have reshaped every vector.",
   "block three: beam now means the beam of this sentence."
 ];
+const stackC = document.getElementById("stackC");
+const P2 = makeSpace(stackC, {radius:0.38, theta:0.55, tilt:0.5});
 function render(){
-  TOKS.forEach((t,ti)=>{
-    for(let i=0;i<NV;i++){
-      cells[ti][i].style.background = valColour(val(ti,i,stage));
-    }
-  });
   const bi = TOKS.indexOf("beam");
-  beamnums.textContent = "beam = [ " +
-    Array.from({length:NV},(_,i)=>val(bi,i,stage).toFixed(2)).join("  ") + " ]";
+  beamnums.textContent = "beam = [ " + Array.from({length:NV},(_,i)=>val(bi,i,stage).toFixed(2)).join("  ") + " ]";
   sRead.textContent = CAPTIONS[stage];
 }
-document.getElementById("upBtn").addEventListener("click",()=>{
-  if(stage < MAXSTAGE){ stage++; render(); }
-});
-document.getElementById("resetBtn").addEventListener("click",()=>{ stage = 0; render(); });
-render();
+document.getElementById("upBtn").addEventListener("click",()=>{ if(stage<MAXSTAGE){ animFrom=shown; stage++; animT0=performance.now(); render(); } });
+document.getElementById("resetBtn").addEventListener("click",()=>{ stage=0; shown=0; animFrom=0; render(); });
+function drawStack(now){
+  const {ctx,st,project}=P2; const W=st.W,H=st.H;
+  if(!st.drag && now-st.last>1500) st.theta+=0.0013;
+  /* the sentence rises smoothly from the previous block to the current one */
+  const k = Math.min(1,(now-animT0)/900); const ease = k<0.5?2*k*k:1-Math.pow(-2*k+2,2)/2;
+  shown = animFrom + (stage-animFrom)*ease;
+  ctx.clearRect(0,0,W,H);
+  /* the blocks: four translucent floors */
+  for(let s2=0;s2<=MAXSTAGE;s2++){
+    const y=-0.78+s2*0.52, lit = s2<=Math.ceil(shown);
+    ctx.save(); ctx.beginPath();
+    [[-0.95,-0.95],[0.95,-0.95],[0.95,0.95],[-0.95,0.95]].forEach(([x,z],i)=>{const q=project(x,y,z);i?ctx.lineTo(q.sx,q.sy):ctx.moveTo(q.sx,q.sy);});
+    ctx.closePath(); ctx.fillStyle = lit?"rgba(23,159,160,0.05)":"rgba(138,141,135,0.03)"; ctx.fill();
+    ctx.strokeStyle = lit?"rgba(23,159,160,0.45)":"rgba(138,141,135,0.35)"; ctx.lineWidth=0.9; ctx.stroke(); ctx.restore();
+    const lab = project(-0.95,y,0.95); label(ctx,lab, s2===0?"embeddings":"block "+s2, SOFT,"10px system-ui, sans-serif",-2,14);
+  }
+  /* threads: each token's path so far */
+  const order = TOKS.map((t,i)=>({t,i,q:project(...pos(i,shown))})).sort((A,B)=>A.q.depth-B.q.depth);
+  for(const {t,i} of order){
+    const isBeam = t==="beam"; const col = isBeam?GOLD:SOFT;
+    ctx.save(); ctx.strokeStyle=col; ctx.lineWidth=isBeam?2:1.1; ctx.globalAlpha=isBeam?0.9:0.55; ctx.beginPath();
+    const steps = 24; for(let k2=0;k2<=steps;k2++){ const sv = shown*k2/steps; const q=project(...pos(i,sv)); k2?ctx.lineTo(q.sx,q.sy):ctx.moveTo(q.sx,q.sy); }
+    ctx.stroke(); ctx.restore();
+    for(let s2=0;s2<=Math.floor(shown);s2++){ const q=project(...pos(i,s2)); ctx.beginPath(); ctx.arc(q.sx,q.sy,2,0,6.283); ctx.fillStyle=col; ctx.globalAlpha=0.35; ctx.fill(); ctx.globalAlpha=1; }
+    const q=project(...pos(i,shown));
+    ctx.beginPath(); ctx.arc(q.sx,q.sy,isBeam?5:3.5,0,6.283); ctx.fillStyle=col; ctx.globalAlpha=0.55+0.45*q.depth; ctx.fill(); ctx.globalAlpha=1;
+    label(ctx,q,t,isBeam?INK:SOFT,isBeam?"italic 13px Georgia, serif":"italic 12px Georgia, serif",7,4);
+  }
+  requestAnimationFrame(drawStack);
+}
+render(); requestAnimationFrame(drawStack);
 </script>
 <script>
 /* the opening image */
